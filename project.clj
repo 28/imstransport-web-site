@@ -30,7 +30,8 @@
      :jar true
      :source-paths ["src-cljs"]
      :compiler
-     {:output-to     "target/cljsbuild/imstransport_web_site/public/js/main.js"
+     {:main "cljs.map"
+      :output-to     "target/cljsbuild/imstransport_web_site/public/js/main.js"
       :optimizations :advanced}}]}
   :aliases {"setup"  ["run" "-m" "duct.util.repl/setup"]}
   :profiles
@@ -52,7 +53,7 @@
                                   [com.cemerick/piggieback "0.2.1"]
                                   [duct/figwheel-component "0.3.3"]
                                   [figwheel "0.5.8"]]
-                   :source-paths   ["dev/src"]
+                   :source-paths   ["dev/src" "src-cljs"]
                    :resource-paths ["dev/resources"]
                    :repl-options {:init-ns user
                                   :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}

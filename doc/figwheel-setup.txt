@@ -1,0 +1,16 @@
+Configuire the site to use our custom cljs files
+
+- For cljsbuild to see our cljs files, their location must be
+defined in all :source-path where these files need to be used.
+In our project "src-cljs" directory is listed in project.clj
+under :cljsbuild -> :builds -> :id[main] and in dev profile
+:source-paths. For dev profile dev.edn file is also updated in
+:source-paths.
+- The key player is main cljs namespace. That namespace is defined
+in :cljsbuild -> :compiler -> :main. For dev profile it is defined
+in dev.edn :figwheel -> :builds -> :id[dev] -> :main. It defines the
+main namespace that will pull all other dependent namespaces. In our
+project for dev profile main namespace is cljs.user, so we added a
+dependecy on cljs.map in that file. cljs.map is now automaticaly
+loaded and recognized by Figwheel. For non-dev profiles i.e. production
+main namespace will be cljs.map as it is defined in project.clj.

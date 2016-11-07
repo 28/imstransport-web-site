@@ -11,7 +11,7 @@
   {:css-dirs ["resources/imstransport_web_site/public/css"]
    :builds
    [{:id "dev"
-     :source-paths ["src" "dev"]
+     :source-paths ["src" "dev" "src-cljs"]
      :build-options
      {:optimizations :none
       :main "cljs.user"

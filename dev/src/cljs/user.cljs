@@ -1,6 +1,7 @@
 (ns cljs.user
   (:require [devtools.core :as devtools]
-            [figwheel.client :as figwheel]))
+            [figwheel.client :as figwheel]
+            [cljs.map :as map]))
 
 (js/console.info "Starting in development mode")
 

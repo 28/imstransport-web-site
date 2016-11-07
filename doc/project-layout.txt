@@ -7,6 +7,8 @@ imstransport-web-site
 │   │   ├── dev.edn
 │   │   └── local.edn *
 │   └── src
+│	├── cljs
+│	│	└── user.cljs	
 │       ├── dev.clj
 │       ├── local.clj *
 │       └── user.clj
@@ -25,21 +27,20 @@ imstransport-web-site
 │       │    └── index.html
 │       └── system.edn
 ├── src
-│   ├── imstransport-web-site
-│   │    ├── boundary
-│   │    │   
-│   │    ├── component
-│   │    │
-│   │    ├── services
-│   │    │   └── api.clj
-│   │    ├── endpoint
-│   │    │   └── transport-price.clj
-│   │    └── main.clj
-│   │ 
-├── src-clj
-    └── ...
+│   └── imstransport-web-site
+│       ├── boundary
+│       │   
+│       ├── component
+│       │
+│       ├── services
+│       │   └── api.clj
+│       ├── endpoint
+│       │   └── transport-price.clj
+│       └── main.clj
+│    
+├── src-cljs
+    └── map.cljs
 └── test
     └── ...
 
 * - not saved in source control
-
