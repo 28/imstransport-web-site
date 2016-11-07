@@ -13,7 +13,11 @@
                  [ring-jetty-component "0.3.1"]
                  [ring-webjars "0.1.1"]
                  [org.slf4j/slf4j-nop "1.7.21"]
-                 [org.webjars/normalize.css "3.0.2"]]
+                 [org.webjars/normalize.css "3.0.2"]
+                 [cljsjs/openlayers "3.15.1"]
+                 [cljsjs/react "15.3.1-0"]
+                 [cljsjs/react-dom "15.3.1-0"]
+                 [org.omcljs/om "1.0.0-alpha46"]]
   :plugins [[lein-environ "1.0.3"]
             [lein-cljsbuild "1.1.2"]]
   :main ^:skip-aot imstransport-web-site.main
