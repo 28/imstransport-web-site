@@ -15,17 +15,31 @@ imstransport-web-site
 ├── resources
 │   └── imstransport-web-site
 │       ├── errors
+│       │     ├── 404.html
+│       │     └── 500.html
 │       ├── public
-        │    └──
+│       │    ├── css
+│       │    │   └── site.css
+│       │    ├── favicon.ico
+│       │    ├── robots.txt
+│       │    └── index.html
 │       └── system.edn
 ├── src
-│   └── {{project}}
-│       ├── boundary
-│       │   
-│       ├── component
-│       │   
-│       ├── endpoint
-│       │   └── {{endpoint}}.clj
-│       └── main.clj
+│   ├── imstransport-web-site
+│   │    ├── boundary
+│   │    │   
+│   │    ├── component
+│   │    │
+│   │    ├── services
+│   │    │   └── api.clj
+│   │    ├── endpoint
+│   │    │   └── transport-price.clj
+│   │    └── main.clj
+│   │ 
+├── src-clj
+    └── ...
 └── test
     └── ...
+
+* - not saved in source control
+
