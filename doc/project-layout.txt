@@ -1,0 +1,31 @@
+imstransport-web-site
+├── README.md
+├── doc
+│   └── project-layout.txt
+├── dev
+│   ├── resources
+│   │   ├── dev.edn
+│   │   └── local.edn *
+│   └── src
+│       ├── dev.clj
+│       ├── local.clj *
+│       └── user.clj
+├── profiles.clj *
+├── project.clj
+├── resources
+│   └── imstransport-web-site
+│       ├── errors
+│       ├── public
+        │    └──
+│       └── system.edn
+├── src
+│   └── {{project}}
+│       ├── boundary
+│       │   
+│       ├── component
+│       │   
+│       ├── endpoint
+│       │   └── {{endpoint}}.clj
+│       └── main.clj
+└── test
+    └── ...
