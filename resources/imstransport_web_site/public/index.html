@@ -1,30 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" class="welcome">
   <head>
-    <title>Welcome to Duct</title>
+    <title>IMS Transport</title>
     <link rel="stylesheet" href="/assets/normalize.css/normalize.css">
     <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>Welcome to <span class="outer"><span class="inner">Duct</span></span></h1>
-    <div class="intro">
-      <p>Congratulations! Your project <span class="project-name">imstransport-web-site</span> is
-        ready and running.</p>
-      <p>This is a static welcome page located at <code>resources/imstransport_web_site/public/index.html</code>
-        in the project directory. Remove or replace it when you start developing.
-        If you remove the index page entirely, be sure to change the
-        <code>:route-aliases</code> map in <code>resources/imstransport_web_site/system.edn</code>.
-    </div>
-    <div class="profiles">
-      <h2>Template profiles used:</h2>
-      <dl>
-        <dt>+cljs</dt>
-        <dd>Adds ClojureScript support. Try running <code>(cljs-repl)</code> in the
-        REPL.</dd>
-        <dt>+site</dt>
-        <dd>Adds middleware and configuration suited for a user-facing website.</dd>
-      </dl>
-    </div>
+    <header>
+      <h1>IMS Transport</h1>
+    </header>
+    <content>
+      <div class="container">
+        <div id="info" class="row">INFO</div>
+        <div id="main" class="row">MAIN</div>
+        <div id="business" class="row">BUSINESS</div>
+      </div>
+    </content>
+    <footer>
+      <span>&copy; IMS Transport</span>
+      <span>Created by: Monadic Development Inc.</span>
+    </footer>
     <script src="/js/main.js"></script>
   </body>
 </html>
