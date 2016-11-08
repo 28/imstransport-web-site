@@ -1,6 +1,8 @@
 (ns cljs.map
     (:require ol.Map
             ol.Collection
+            ol.source.Vector
+            ol.layer.Vector
             ol.layer.Tile
             ol.View
             ol.proj
@@ -10,14 +12,25 @@
             ol.geom.Polygon
             ol.geom.Point))
 
-(set! (.-onload js/window)
-  (fn []
-    (let [source (ol.source.OSM. #js {:layer "sat"})
-          raster (ol.layer.Tile. #js {:source source})
+(enable-console-print!)
+
+(defn create-transport-map []
+  (let [rasterSource (ol.source.OSM. #js {:layer "sat"})
+          rasterLayer (ol.layer.Tile. #js {:source rasterSource})
           view (ol.View. #js {:center (ol.proj.fromLonLat #js [20.4489 44.7866])
                             :zoom 11
-                            :maxZoom 18})]
-      (map (ol.Map. #js {:layers #js [raster]
+                            :maxZoom 18})
+          vectorSource (ol.source.Vector.)
+          vectorLayer  (ol.layer.Vector. #js {:source vectorSource})
+          drawInteraction (ol.interaction.Draw. #js {:source vectorSource
+                                         :type "LineString"})]
+       (ol.Map. #js {:layers #js [rasterLayer, vectorLayer]
                           :target "map"
-                          :view   view})))))
+                          :view   view
+                          :interactions #js [drawInteraction]}))
+  )
+
+(set! (.-onload js/window)
+  (fn []
+    (create-transport-map)))
 
