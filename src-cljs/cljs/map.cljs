@@ -23,11 +23,11 @@
         vectorSource (ol.source.Vector.)
         vectorLayer  (ol.layer.Vector. #js {:source vectorSource})
         drawInteraction (ol.interaction.Draw. #js {:source vectorSource
-                                         :type "LineString"})]
-       (ol.Map. #js {:layers #js [rasterLayer, vectorLayer]
-                          :target "map"
-                          :view   view
-                          :interactions #js [drawInteraction]}))
+                                                   :type "LineString"})]
+       (ol.Map. #js { :layers #js [rasterLayer, vectorLayer]
+                      :target "map"
+                      :view   view
+                      :interactions #js [drawInteraction]}))
   )
 
 (set! (.-onload js/window)
