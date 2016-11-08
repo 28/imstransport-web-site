@@ -17,7 +17,7 @@
           view (ol.View. #js {:center (ol.proj.fromLonLat #js [20.4489 44.7866])
                             :zoom 11
                             :maxZoom 18})]
-      (map (ol.Map. #js {:layers #js [rastercd]
+      (map (ol.Map. #js {:layers #js [raster]
                           :target "map"
                           :view   view})))))
 
