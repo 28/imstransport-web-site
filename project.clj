@@ -49,13 +49,11 @@
                                   [eftest "0.1.1"]
                                   [com.gearswithingears/shrubbery "0.4.1"]
                                   [kerodon "0.8.0"]
-                                  [binaryage/devtools "0.8.2"]
-                                  [com.cemerick/piggieback "0.2.1"]
+                                  [binaryage/devtools "0.8.2"]                  
                                   [duct/figwheel-component "0.3.3"]
                                   [figwheel "0.5.8"]]
                    :source-paths   ["dev/src" "src-cljs"]
                    :resource-paths ["dev/resources"]
-                   :repl-options {:init-ns user
-                                  :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
+                   :repl-options {:init-ns user}
                    :env {:port "3000"}}
    :project/test  {}})
