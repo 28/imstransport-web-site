@@ -32,7 +32,8 @@
      :compiler
      {:main "cljs.map"
       :output-to     "target/cljsbuild/imstransport_web_site/public/js/main.js"
-      :optimizations :advanced}}]}
+      :optimizations :advanced
+      :closure-extra-annotations #{"api" "observable"}}}]}
   :aliases {"setup"  ["run" "-m" "duct.util.repl/setup"]}
   :profiles
   {:dev  [:project/dev  :profiles/dev]

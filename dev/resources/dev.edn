@@ -19,4 +19,5 @@
       :output-to  "target/figwheel/imstransport_web_site/public/js/main.js"
       :output-dir "target/figwheel/imstransport_web_site/public/js"
       :source-map true
-      :source-map-path "/js"}}]}}}
+      :source-map-path "/js"
+      :closure-extra-annotations #{"api" "observable"}}}]}}}
