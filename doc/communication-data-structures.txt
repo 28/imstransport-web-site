@@ -1,0 +1,25 @@
+# Api endpoint
+
+Api endpoint will communicate to client via JSON.
+JSON request should conform to this schema:
+
+{:origin {:lat s/Num :long s/Num}
+ :dest {:lat s/Num :long s/Num}
+ :in-belgrade s/Bool}
+
+JSON string example:
+
+{"origin":{"lat":1,"long":2},"dest":{"lat":3,"long":4},"in-belgrade":true}
+
+:origin map represents the start location of transport with its latidute and longitude. :dest map is the destination location with its latidute and longitude. :in-belgrade parameter should indicate if the transport will be done in the boundaries of
+Belgrade city or not.
+
+JSON response will conform to this schema:
+
+{:price s/Num}
+
+JSON string example:
+
+{"price":100}
+
+This indicates the price of the transport.

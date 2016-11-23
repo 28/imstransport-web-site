@@ -1,11 +1,13 @@
 {:components
  {:app  #var duct.component.handler/handler-component
-  :http #var ring.component.jetty/jetty-server}
+  :http #var ring.component.jetty/jetty-server
+  :google-api #var imstransport-web-site.component.google-road-api-proxy/google-road-api-proxy}
  :endpoints
  {:transport-price #var imstransport-web-site.endpoint.transport-price/transport-price-endpoint}
  :dependencies
  {:http [:app]
-  :app  [:transport-price]}
+  :app  [:transport-price]
+  :transport-price [:google-api]}
  :config
  {:app
   {:middleware
@@ -14,9 +16,12 @@
      :not-found     #var duct.middleware.not-found/wrap-not-found
      :ring-defaults #var ring.middleware.defaults/wrap-defaults
      :route-aliases #var duct.middleware.route-aliases/wrap-route-aliases
-     :webjars       #var ring.middleware.webjars/wrap-webjars}
+     :webjars       #var ring.middleware.webjars/wrap-webjars
+     :json-params   #var ring.middleware.json/wrap-json-params
+     :json-response #var ring.middleware.json/wrap-json-response}
     :applied
-    [:not-found :webjars :ring-defaults :route-aliases :hide-errors]
+    [:not-found :webjars :ring-defaults :route-aliases :hide-errors
+     :json-params :json-response]
     :arguments
     {:not-found     #resource "imstransport_web_site/errors/404.html"
      :hide-errors   #resource "imstransport_web_site/errors/500.html"
@@ -29,7 +34,7 @@
       :cookies   true
       :session   {:flash true
                   :cookie-attrs {:http-only true}}
-      :security  {:anti-forgery   true
+      :security  {:anti-forgery   false
                   :xss-protection {:enable? true, :mode :block}
                   :frame-options  :sameorigin
                   :content-type-options :nosniff}
@@ -39,4 +44,6 @@
                   :content-types          true
                   :default-charset        "utf-8"}}}}}
   :http
-  {:port http-port}}}
+  {:port http-port}
+  :google-api
+  {:api-key "dummy"}}}

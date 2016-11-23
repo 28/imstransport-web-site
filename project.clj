@@ -10,6 +10,7 @@
                  [environ "1.1.0"]
                  [ring "1.5.0"]
                  [ring/ring-defaults "0.2.1"]
+                 [ring/ring-json "0.4.0"]
                  [ring-jetty-component "0.3.1"]
                  [ring-webjars "0.1.1"]
                  [org.slf4j/slf4j-nop "1.7.21"]
@@ -17,7 +18,9 @@
                  [cljsjs/openlayers "3.15.1"]
                  [cljsjs/react "15.3.1-0"]
                  [cljsjs/react-dom "15.3.1-0"]
-                 [org.omcljs/om "1.0.0-alpha46"]]
+                 [org.omcljs/om "1.0.0-alpha46"]
+                 [prismatic/schema "1.1.3"]
+                 [cheshire "5.6.3"]]
   :plugins [[lein-environ "1.0.3"]
             [lein-cljsbuild "1.1.2"]]
   :main ^:skip-aot imstransport-web-site.main
@@ -52,7 +55,8 @@
                                   [kerodon "0.8.0"]
                                   [binaryage/devtools "0.8.2"]                  
                                   [duct/figwheel-component "0.3.3"]
-                                  [figwheel "0.5.8"]]
+                                  [figwheel "0.5.8"]
+                                  [ring/ring-mock "0.3.0"]]
                    :source-paths   ["dev/src" "src-cljs"]
                    :resource-paths ["dev/resources"]
                    :repl-options {:init-ns user}

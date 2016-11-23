@@ -4,7 +4,8 @@
  {:app
   {:middleware
    {:functions {:stacktrace #var ring.middleware.stacktrace/wrap-stacktrace}
-    :applied   ^:replace [:not-found :webjars :ring-defaults :route-aliases :stacktrace]}}
+    :applied   ^:replace [:not-found :webjars :ring-defaults :route-aliases
+                          :stacktrace :json-params :json-response]}}
   :http
   {:port 3000}
   :figwheel
