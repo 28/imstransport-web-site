@@ -46,4 +46,5 @@
   :http
   {:port http-port}
   :google-api
-  {:api-key "dummy"}}}
+  {:api-key distance-matrix-api-key
+   :base-url google-api-base-url}}}
