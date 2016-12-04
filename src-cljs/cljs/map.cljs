@@ -14,6 +14,9 @@
 
 (enable-console-print!)
 
+(defn draw-end-handler []
+  (js/alert "Function"))
+
 (defn create-transport-map []
   (let [rasterSource (ol.source.OSM. #js {:layer "sat"})
         rasterLayer (ol.layer.Tile. #js {:source rasterSource})
@@ -23,14 +26,15 @@
         vectorSource (ol.source.Vector.)
         vectorLayer  (ol.layer.Vector. #js {:source vectorSource})
         drawInteraction (ol.interaction.Draw. #js {:source vectorSource
-                                                   :type "LineString"})]
-       (ol.Map. #js { :layers #js [rasterLayer, vectorLayer]
+                                                   :type "LineString"})
+       map (ol.Map. #js { :layers #js [rasterLayer, vectorLayer]
                       :target "map"
                       :view   view
-                      :interactions #js [drawInteraction]}))
-  )
+                      })]
+        (do
+        (.addInteraction map drawInteraction)
+        (.on drawInteraction "drawend" draw-end-handler))))
 
 (set! (.-onload js/window)
   (fn []
     (create-transport-map)))
-
