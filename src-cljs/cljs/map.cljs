@@ -10,12 +10,29 @@
             ol.source.OSM
             ol.interaction.Draw
             ol.geom.Polygon
-            ol.geom.Point))
+            ol.geom.Point
+            [ajax.core :refer [GET POST]]
+            [cljs.reader :as reader]))
 
 (enable-console-print!)
 
-(defn draw-end-handler []
-  (js/alert "Function"))
+(defn get-price-information [response]
+  (let [price (aget  (.-arr response) 1)
+        message (str "Cena je: " price " dinara.")]
+  (js/alert  message)))
+
+(defn draw-end-handler [e]
+
+  (let [coords (.getCoordinates (.getGeometry (.-feature e)))
+        first-coord (aget js/coords 0)
+        end-coord (aget js/coords 1)]
+    (POST "/api"
+    {:params {:origin {:lat (aget js/first-coord 0) :long (aget js/first-coord 1)}
+                        :dest {:lat (aget js/end-coord 0) :long (aget js/end-coord 1)}
+                        :in-belgrade true}
+     :format :json
+     :response-format :json
+     :handler get-price-information})))
 
 (defn create-transport-map []
   (let [rasterSource (ol.source.OSM. #js {:layer "sat"})
@@ -32,8 +49,8 @@
                       :view   view
                       })]
         (do
-        (.addInteraction map drawInteraction)
-        (.on drawInteraction "drawend" draw-end-handler))))
+          (.addInteraction map drawInteraction)
+          (.on drawInteraction "drawend" draw-end-handler))))
 
 (set! (.-onload js/window)
   (fn []
