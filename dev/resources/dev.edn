@@ -21,4 +21,7 @@
       :output-dir "target/figwheel/imstransport_web_site/public/js"
       :source-map true
       :source-map-path "/js"
-      :closure-extra-annotations #{"api" "observable"}}}]}}}
+      :closure-extra-annotations #{"api" "observable"}}}]}
+  :google-api ^:replace
+  {:dm-api-key "AIzaSyBk8yZqyROKuFaJDRnNn8-fdD3dBuxwvhQ"
+   :dm-base-url "https://maps.googleapis.com/maps/api/distancematrix/"}}}

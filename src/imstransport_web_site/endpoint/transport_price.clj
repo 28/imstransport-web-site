@@ -16,7 +16,7 @@
 (defn valid-input-data? [data]
   (try (s/validate TransportData data)
        true
-       (catch Exception e false)))
+       (catch Exception _ false)))
 
 (defn do-calculate-price [proxy input]
   (if-let [distance (get-distance proxy (:origin input) (:dest input))]

@@ -1,0 +1,40 @@
+Google Distance matrix example
+
+Origin: 44.816128,20.4186053
+Destination: 44.815041,20.4898558
+
+Request:
+https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=44.816128,20.4186053&destinations=44.815041,20.4898558&key=AIzaSyBk8yZqyROKuFaJDRnNn8-fdD3dBuxwvhQ
+
+Response:
+{
+   "destination_addresses" : [ "Dragoslava Srejovića, Beograd, Serbia" ],
+   "origin_addresses" : [ "Bulevar Zorana Đinđića 83, Beograd, Serbia" ],
+   "rows" : [
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "6.5 km",
+                  "value" : 6461
+               },
+               "duration" : {
+                  "text" : "16 mins",
+                  "value" : 971
+               },
+               "status" : "OK"
+            }
+         ]
+      }
+   ],
+   "status" : "OK"
+}
+
+Example error response:
+
+{
+   "destination_addresses" : [],
+   "origin_addresses" : [],
+   "rows" : [],
+   "status" : "INVALID_REQUEST"
+}

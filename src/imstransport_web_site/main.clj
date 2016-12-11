@@ -7,10 +7,10 @@
               [clojure.java.io :as io]))
 
 (defn -main [& args]
-  (let [google-conf (clojure.edn/read-string (slurp (io/file (io/resource "imstransport_web_site/google.end"))))
+  (let [google-conf (clojure.edn/read-string (slurp (io/file (io/resource "imstransport_web_site/google.edn"))))
         bindings {'http-port (Integer/parseInt (:port env "3000"))
-                  'distance-matrix-api-key (:distance-matrix-api-key google-conf)
-                  'google-api-base-url (:base-url google-conf)}
+                  'dm-api-key (-> google-conf :dm-api-key)
+                  'dm-base-url (-> google-conf :dm-base-url)}
         system   (->> (load-system [(io/resource "imstransport_web_site/system.edn")] bindings)
                       (component/start))]
     (add-shutdown-hook ::stop-system #(component/stop system))

@@ -46,5 +46,5 @@
   :http
   {:port http-port}
   :google-api
-  {:api-key distance-matrix-api-key
-   :base-url google-api-base-url}}}
+  {:dm-api-key dm-api-key
+   :dm-base-url dm-base-url}}}
