@@ -58,7 +58,8 @@
                                   [binaryage/devtools "0.8.2"]
                                   [duct/figwheel-component "0.3.3"]
                                   [figwheel "0.5.8"]
-                                  [ring/ring-mock "0.3.0"]]
+                                  [ring/ring-mock "0.3.0"]
+                                  [se.haleby/stub-http "0.2.1"]]
                    :source-paths   ["dev/src" "src-cljs"]
                    :resource-paths ["dev/resources"]
                    :repl-options {:init-ns user}

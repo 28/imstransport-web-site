@@ -41,7 +41,6 @@
           response (http/get u {:accept :json})
           json-response (json/parse-string (:body response) true)]
       (when (status-ok? json-response)
-        (println json-response)
         json-response))))
 
 (defn google-road-api-proxy [config]
