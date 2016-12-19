@@ -1,46 +1,54 @@
-imstransport-web-site
-├── README.md
-├── doc
-│   └── project-layout.txt
+.
 ├── dev
-│   ├── resources
-│   │   ├── dev.edn
-│   │   └── local.edn *
-│   └── src
-│	├── cljs
-│	│	└── user.cljs	
-│       ├── dev.clj
-│       ├── local.clj *
-│       └── user.clj
-├── profiles.clj *
+│   ├── resources
+│   │   └── dev.edn
+│   └── src
+│       ├── cljs
+│       │   └── user.cljs
+│       ├── dev.clj
+│       └── user.clj
+├── doc
+│   ├── communication-data-structures.txt
+│   ├── figwheel-setup.txt
+│   ├── google-distance-matrix-example-request.txt
+│   └── project-layout.txt
 ├── project.clj
+├── README.md
 ├── resources
-│   └── imstransport-web-site
-│       ├── errors
-│       │     ├── 404.html
-│       │     └── 500.html
-│       ├── public
-│       │    ├── css
-│       │    │   └── site.css
-│       │    ├── favicon.ico
-│       │    ├── robots.txt
-│       │    └── index.html
-│       └── system.edn
+│   └── imstransport_web_site
+│       ├── errors
+│       │   ├── 404.html
+│       │   └── 500.html
+│       ├── google.edn
+│       ├── public
+│       │   ├── css
+│       │   │   └── site.css
+│       │   ├── favicon.ico
+│       │   ├── index.html
+│       │   └── robots.txt
+│       └── system.edn
 ├── src
-│   └── imstransport-web-site
-│       ├── boundary
-│       │   
-│       ├── component
-│       │
-│       ├── services
-│       │   └── api.clj
-│       ├── endpoint
-│       │   └── transport-price.clj
-│       └── main.clj
-│    
+│   └── imstransport_web_site
+│       ├── component
+│       │   └── google_road_api_proxy.clj
+│       ├── endpoint
+│       │   └── transport_price.clj
+│       ├── main.clj
+│       └── util
+│           └── url.clj
 ├── src-cljs
-    └── map.cljs
-└── test
-    └── ...
+│   └── cljs
+│       └── map.cljs
+├── test
+│   └── imstransport_web_site
+│       ├── component
+│       │   └── google_road_api_proxy_test.clj
+│       ├── endpoint
+│       │   └── transport_price_test.clj
+│       └── util
+│           └── url_test.clj
+└── tools
+    ├── build.sh
+    └── update-project-tree.sh
 
-* - not saved in source control
+23 directories, 28 files
