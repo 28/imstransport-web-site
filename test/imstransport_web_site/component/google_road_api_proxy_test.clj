@@ -24,7 +24,20 @@
                                                                 :duration {:text "15 mins"
                                                                            :value "900"}
                                                                 :status "OK"}]}]
-                                            :status "OK"})}})]
+                                            :status "OK"})}
+                                   {:method :get
+                                    :path "/maps/api/distancematrix/json"
+                                    :query-params {:units "metric"
+                                                   :origins "0,0"
+                                                   :destinations "0,0"
+                                                   :key "abc"}}
+                                   {:status 200
+                                    :content-type "application/json"
+                                    :body (json/generate-string
+                                           {:destination_addresses []
+                                            :origin_addresses []
+                                            :rows []
+                                            :status "INVALID_REQUEST"})}})]
     (try
       (f)
       (finally
@@ -32,8 +45,24 @@
 
 (use-fixtures :each start-and-stop-stub-server)
 
-(deftest Example
-  (let [proxy (google-road-api-proxy {:dm-api-key "abc"
-                                      :dm-base-url (str (:uri *stub-server*) "/maps/api/distancematrix/")})
+(defn- get-proxy
+  []
+  (google-road-api-proxy {:dm-api-key "abc"
+                          :dm-base-url (str (:uri *stub-server*) "/maps/api/distancematrix/")}))
+
+(deftest proxy-handles-everything-ok-response
+  (let [proxy (get-proxy)
         response (get-distance proxy {:lat 1.1 :long 2.2} {:lat 3.3 :long 4.4})]
-    (is (= "1 km" (-> response :rows first :elements first :distance :text)))))
+    (is (and
+         (= "A" (-> response :destination-addresses first))
+         (= "B" (-> response :origin-addresses first))
+         (= "1 km" (-> response :total-distance))
+         (= "15 mins" (-> response :total-duration))))))
+
+(deftest proxy-handles-invalid-request-response
+  (let [proxy (get-proxy)
+        response (get-distance proxy {:lat 0 :long 0} {:lat 0 :long 0})]
+    (is (and
+         (nil? (-> response :total-distance))
+         (nil? (-> response :total-duration))
+         (-> response :error-message)))))

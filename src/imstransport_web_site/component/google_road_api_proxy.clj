@@ -21,7 +21,6 @@
                           "key" api-key})))
 (defn- status-ok?
   [resp]
-  (println resp)
   (and
    (= (:status resp) "OK")
    (every?
@@ -31,17 +30,32 @@
        (:elements e)))
     (:rows resp))))
 
+(defn- error-response
+  [msg]
+  {:total-distance nil
+   :total-duration nil
+   :error-message (str "Internal error: " msg)})
+
+(defn- convert-results
+  [google-response]
+  {:destination-addresses (:destination_addresses google-response)
+   :origin-addresses (:origin_addresses google-response)
+   :total-distance (-> google-response :rows first :elements first :distance :text)
+   :total-duration (-> google-response :rows first :elements first :duration :text)})
+
 (defprotocol GoogleRoadApiBind
   (get-distance [this origin destination]))
 
 (defrecord GoogleRoadApiProxy [api-key base-url]
   GoogleRoadApiBind
   (get-distance [this origin destination]
-    (let [u (request-url base-url api-key origin destination)
-          response (http/get u {:accept :json})
-          json-response (json/parse-string (:body response) true)]
-      (when (status-ok? json-response)
-        json-response))))
+    (try (let [u (request-url base-url api-key origin destination)
+               json-response (http/get u {:accept :json})
+               response (json/parse-string (:body json-response) true)]
+           (if (status-ok? response)
+             (convert-results response)
+             (error-response (:status response))))
+         (catch Exception e (error-response (. e getMessage))))))
 
 (defn google-road-api-proxy [config]
   (->GoogleRoadApiProxy (:dm-api-key config) (:dm-base-url config)))
