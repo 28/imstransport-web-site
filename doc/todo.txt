@@ -1,0 +1,12 @@
+1. podrska za http kodove
+2. Provera da li je u bgu - cljs
+3. Logiku za racunjanje cene
+4. loging
+5. UX i dizajn
+6. release
+------------------------------
+Hard core bayo moj + whey
+
+7. Snap to road feature
+8. DB za sve
+9. Da se cuva kad neko nacrta nesto
