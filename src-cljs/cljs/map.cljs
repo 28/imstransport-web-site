@@ -27,8 +27,8 @@
         first-coord (aget js/coords 0)
         end-coord (aget js/coords 1)]
     (POST "/api"
-    {:params {:origin {:lat (aget js/first-coord 0) :long (aget js/first-coord 1)}
-                        :dest {:lat (aget js/end-coord 0) :long (aget js/end-coord 1)}
+    {:params {:origin {:lat (aget js/first-coord 1) :long (aget js/first-coord 0)}
+                        :dest {:lat (aget js/end-coord 1) :long (aget js/end-coord 0)}
                         :in-belgrade true}
      :format :json
      :response-format :json
