@@ -37,9 +37,10 @@
 (defn create-transport-map []
   (let [rasterSource (ol.source.OSM. #js {:layer "sat"})
         rasterLayer (ol.layer.Tile. #js {:source rasterSource})
-        view (ol.View. #js {:center (ol.proj.fromLonLat #js [20.4489 44.7866])
+        view (ol.View. #js {:center  #js [20.4489 44.7866]
                             :zoom 11
-                            :maxZoom 18})
+                            :maxZoom 18
+                            :projection "EPSG:4326"})
         vectorSource (ol.source.Vector.)
         vectorLayer  (ol.layer.Vector. #js {:source vectorSource})
         drawInteraction (ol.interaction.Draw. #js {:source vectorSource
