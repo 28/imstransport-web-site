@@ -1,5 +1,5 @@
 (ns cljs.map
-    (:require ol.Map
+  (:require ol.Map
             ol.Collection
             ol.source.Vector
             ol.layer.Vector
@@ -17,28 +17,26 @@
 (enable-console-print!)
 
 (defn get-price-information [[ok response]]
-
   (let [response-obj (clj->js response)
         price (aget response-obj "price")
         message (str "Cena je: " price " dinara.")]
-        (js/console.log response-obj)
-  (js/alert  message)))
+    (js/console.log response-obj)
+    (js/alert  message)))
 
 (defn draw-end-handler [e]
-
   (let [coords (.getCoordinates (.getGeometry (.-feature e)))
         first-coord (aget js/coords 0)
         end-coord (aget js/coords 1)]
-        (ajax-request
-            {:uri "/api"
-             :method :post
-             :params {:origin {:lat (aget js/first-coord 1) :long (aget js/first-coord 0)}
-                                 :dest {:lat (aget js/end-coord 1) :long (aget js/end-coord 0)}
-                                 :in-belgrade true}
-             :handler get-price-information
-             :format (json-request-format)
-             :response-format (json-response-format {:keywords? true})
-             :keywords true})))
+    (ajax-request
+     {:uri "/api"
+      :method :post
+      :params {:origin {:lat (aget js/first-coord 1) :long (aget js/first-coord 0)}
+               :dest {:lat (aget js/end-coord 1) :long (aget js/end-coord 0)}
+               :in-belgrade true}
+      :handler get-price-information
+      :response-format :json
+      :format :json
+      :keywords? true})))
 
 (defn create-transport-map []
   (let [rasterSource (ol.source.OSM. #js {:layer "sat"})
@@ -53,14 +51,12 @@
         vectorLayer  (ol.layer.Vector. #js {:source vectorSource})
         drawInteraction (ol.interaction.Draw. #js {:source vectorSource
                                                    :type "LineString"})
-       map (ol.Map. #js { :layers #js [rasterLayer, vectorLayer]
-                      :target "map"
-                      :view   view
-                      })]
-        (do
-          (.addInteraction map drawInteraction)
-          (.on drawInteraction "drawend" draw-end-handler))))
+        map (ol.Map. #js {:layers #js [rasterLayer, vectorLayer]
+                          :target "map"
+                          :view view})]
+    (.addInteraction map drawInteraction)
+    (.on drawInteraction "drawend" draw-end-handler)))
 
 (set! (.-onload js/window)
-  (fn []
-    (create-transport-map)))
+      (fn []
+        (create-transport-map)))
