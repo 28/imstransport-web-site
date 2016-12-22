@@ -20,9 +20,9 @@
                                            {:destination_addresses ["A"]
                                             :origin_addresses ["B"]
                                             :rows [{:elements [{:distance {:text "1 km"
-                                                                           :value "1000"}
+                                                                           :value 1000}
                                                                 :duration {:text "15 mins"
-                                                                           :value "900"}
+                                                                           :value 900}
                                                                 :status "OK"}]}]
                                             :status "OK"})}
                                    {:method :get
@@ -57,7 +57,9 @@
          (= "A" (-> response :destination-addresses first))
          (= "B" (-> response :origin-addresses first))
          (= "1 km" (-> response :total-distance))
-         (= "15 mins" (-> response :total-duration))))))
+         (= "15 mins" (-> response :total-duration))
+         (= 1000 (-> response :total-distance-m))
+         (= 900 (-> response :total-duration-s))))))
 
 (deftest proxy-handles-invalid-request-response
   (let [proxy (get-proxy)

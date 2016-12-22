@@ -7,7 +7,7 @@
  :dependencies
  {:http [:app]
   :app  [:transport-price]
-  :transport-price [:google-api]}
+  :transport-price [:google-api :km-factor]}
  :config
  {:app
   {:middleware
@@ -47,4 +47,5 @@
   {:port http-port}
   :google-api
   {:dm-api-key dm-api-key
-   :dm-base-url dm-base-url}}}
+   :dm-base-url dm-base-url}
+  :km-factor km-factor}}

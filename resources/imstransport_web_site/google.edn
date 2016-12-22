@@ -1,2 +1,3 @@
 {:dm-api-key "AIzaSyBk8yZqyROKuFaJDRnNn8-fdD3dBuxwvhQ"
- :dm-base-url "https://maps.googleapis.com/maps/api/distancematrix/"}
+ :dm-base-url "https://maps.googleapis.com/maps/api/distancematrix/"
+ :km-factor 14}

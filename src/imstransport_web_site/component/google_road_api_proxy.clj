@@ -41,7 +41,9 @@
   {:destination-addresses (:destination_addresses google-response)
    :origin-addresses (:origin_addresses google-response)
    :total-distance (-> google-response :rows first :elements first :distance :text)
-   :total-duration (-> google-response :rows first :elements first :duration :text)})
+   :total-duration (-> google-response :rows first :elements first :duration :text)
+   :total-distance-m (-> google-response :rows first :elements first :distance :value)
+   :total-duration-s (-> google-response :rows first :elements first :duration :value)})
 
 (defprotocol GoogleRoadApiBind
   (get-distance [this origin destination]))
