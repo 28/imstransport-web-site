@@ -39,7 +39,9 @@
         rasterLayer (ol.layer.Tile. #js {:source rasterSource})
         view (ol.View. #js {:center  #js [20.4489 44.7866]
                             :zoom 11
-                            :maxZoom 18
+                            :extent #js [18.5 40.4 22.7 47.5]
+                            :minZoom 7
+                            :maxZoom 19
                             :projection "EPSG:4326"})
         vectorSource (ol.source.Vector.)
         vectorLayer  (ol.layer.Vector. #js {:source vectorSource})
