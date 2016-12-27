@@ -15,24 +15,30 @@
 (defn- wrap-response [body]
   {:body body})
 
-(defn- error-response [msg]
-  (wrap-response {:price nil
-                  :error-message msg}))
+(defn- error-response [flag msg]
+  {:status (cond
+             (= flag :invalid-google-request) 400
+             (= flag :internal) 500
+             (= flag :invalid-request) 400
+             :else 500)
+   :headers {"Content-Type" "application/json"}
+   :body {:price nil
+          :error-message msg}})
 
 (defn- calculate
   [dist km-factor]
-   (int (Math/ceil (* (double (/ dist 1000)) km-factor))))
+  (int (Math/ceil (* (double (/ dist 1000)) km-factor))))
 
 (defn do-calculate-price [proxy input km-factor]
   (let [distance-map (get-distance proxy (:origin input) (:dest input))]
     (if-not (:error-message distance-map)
       (wrap-response (conj distance-map {:price (calculate (:total-distance-m distance-map) km-factor)}))
-      (error-response (:error-message distance-map)))))
+      (error-response (:error-flag distance-map) (:error-message distance-map)))))
 
 (defn calculate-price [proxy input km-factor]
   (if (valid-input-data? input)
     (do-calculate-price proxy input km-factor)
-    (error-response (str "Input data is not valid!"))))
+    (error-response :invalid-request (str "Input data is not valid!"))))
 
 (defn transport-price-endpoint [config]
   (context "/api" []

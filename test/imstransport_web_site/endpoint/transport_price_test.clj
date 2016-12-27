@@ -25,14 +25,22 @@
       rj/wrap-json-params
       rj/wrap-json-response)) ;; This happens on system start here is only replicated - todo - see if there is a better way for this.
 
+(defn- execute-request
+  [data]
+  (let [data-json (json/generate-string data)
+        request (-> (mock/request :post "/api" data-json)
+                    (mock/content-type "application/json"))]
+    (handler request)))
+
 (deftest response-test
   (testing "endpoint returns a response"
-    (let [data {:origin {:lat 1 :long 2}
-                :dest {:lat 3 :long 4}
-                :in-belgrade true}
-          data-json (json/generate-string data)
-          request (-> (mock/request :post "/api" data-json)
-                      (mock/content-type "application/json"))
-          response (handler request)]
+    (let [response (execute-request {:origin {:lat 1 :long 2}
+                                     :dest {:lat 3 :long 4}
+                                     :in-belgrade true})]
       (is (= (:status response) 200))
-      (is (= (:price (json/parse-string (:body response) true)) 14)))))
+      (is (= (:price (json/parse-string (:body response) true)) 14))))
+  (testing "endpoint handles a bad request"
+    (let [response (execute-request {:origin {:lat 1 :long 2}
+                                     :dest {:lat 3}})]
+      (is (= (:status response) 400))
+      (is (:error-message (json/parse-string (:body response) true))))))

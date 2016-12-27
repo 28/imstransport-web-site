@@ -31,9 +31,8 @@
     (:rows resp))))
 
 (defn- error-response
-  [msg]
-  {:total-distance nil
-   :total-duration nil
+  [flag msg]
+  {:error-flag flag
    :error-message (str "Internal error: " msg)})
 
 (defn- convert-results
@@ -56,8 +55,8 @@
                response (json/parse-string (:body json-response) true)]
            (if (status-ok? response)
              (convert-results response)
-             (error-response (:status response))))
-         (catch Exception e (error-response (. e getMessage))))))
+             (error-response :invalid-google-request (:status response))))
+         (catch Exception e (error-response :internal (. e getMessage))))))
 
 (defn google-road-api-proxy [config]
   (->GoogleRoadApiProxy (:dm-api-key config) (:dm-base-url config)))

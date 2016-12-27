@@ -1,9 +1,7 @@
-1. podrska za http kodove
-2. Provera da li je u bgu - cljs
-3. Logiku za racunjanje cene
-4. loging
-5. UX i dizajn
-6. release
+1. Provera da li je u bgu - cljs
+2. loging
+3. UX i dizajn
+4. release
 ------------------------------
 Hard core bayo moj + whey
 
