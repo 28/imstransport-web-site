@@ -20,7 +20,19 @@
 
 (def handler
   (-> (transport-price/transport-price-endpoint {:google-api google-api-stub
-                                                 :km-factor 14})
+                                                 :transport-config
+                                                 {:km-factor 14
+                                                  :fuel-factor 1
+                                                  :fixed-price-part 0
+                                                  :bg-fixed-price 2500
+                                                  :bg-coord {:ul-lat 4
+                                                             :ul-long 4
+                                                             :ur-lat 4
+                                                             :ur-long 4
+                                                             :bl-lat 4
+                                                             :bl-long 4
+                                                             :br-lat 4
+                                                             :br-long 4}}})
       kwp/wrap-keyword-params
       rj/wrap-json-params
       rj/wrap-json-response)) ;; This happens on system start here is only replicated - todo - see if there is a better way for this.
@@ -35,8 +47,7 @@
 (deftest response-test
   (testing "endpoint returns a response"
     (let [response (execute-request {:origin {:lat 1 :long 2}
-                                     :dest {:lat 3 :long 4}
-                                     :in-belgrade true})]
+                                     :dest {:lat 3 :long 4}})]
       (is (= (:status response) 200))
       (is (= (:price (json/parse-string (:body response) true)) 14))))
   (testing "endpoint handles a bad request"

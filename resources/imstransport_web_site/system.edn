@@ -7,7 +7,7 @@
  :dependencies
  {:http [:app]
   :app  [:transport-price]
-  :transport-price [:google-api :km-factor]}
+  :transport-price [:google-api :transport-config]}
  :config
  {:app
   {:middleware
@@ -48,4 +48,16 @@
   :google-api
   {:dm-api-key dm-api-key
    :dm-base-url dm-base-url}
-  :km-factor km-factor}}
+  :transport-config
+  {:km-factor 14
+   :fuel-factor 1
+   :fixed-price-part 0
+   :bg-fixed-price 2500
+   :bg-coord {:ul-lat 1
+              :ul-long 1
+              :ur-lat 1
+              :ur-long 1
+              :bl-lat 1
+              :bl-long 1
+              :br-lat 1
+              :br-long 1}}}}

@@ -31,8 +31,7 @@
      {:uri "/api"
       :method :post
       :params {:origin {:lat (aget js/first-coord 1) :long (aget js/first-coord 0)}
-               :dest {:lat (aget js/end-coord 1) :long (aget js/end-coord 0)}
-               :in-belgrade true}
+               :dest {:lat (aget js/end-coord 1) :long (aget js/end-coord 0)}}
       :handler get-price-information
       :response-format :json
       :format :json

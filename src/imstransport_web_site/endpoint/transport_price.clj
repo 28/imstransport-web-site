@@ -4,8 +4,7 @@
             [imstransport-web-site.component.google-road-api-proxy :refer :all]))
 
 (def TransportData {:origin {:lat s/Num :long s/Num}
-                    :dest {:lat s/Num :long s/Num}
-                    :in-belgrade s/Bool}) 
+                    :dest {:lat s/Num :long s/Num}}) 
 
 (defn valid-input-data? [data]
   (try (s/validate TransportData data)
@@ -25,24 +24,43 @@
    :body {:price nil
           :error-message msg}})
 
-(defn- calculate
-  [dist km-factor]
-  (int (Math/ceil (* (double (/ dist 1000)) km-factor))))
+(defn- transport-in-belgrade?
+  [input config]
+  ;; TODO - Check coordinates here
+  false)
 
-(defn do-calculate-price [proxy input km-factor]
+(defn- calculate-belgrade-price
+  [distance-map config]
+  (:bg-fixed-price config))
+
+(defn- calculate-price
+  [distance-map config]
+  ;; TODO - Refactor this (with list comprehention)
+  (+ (:fixed-price-part config) (int (Math/ceil (* (double (/ (:total-distance-m distance-map) 1000)) (:km-factor config))))))
+
+(defn- get-response
+  [calc-fn distance-map config]
+  (wrap-response (conj distance-map {:price (calc-fn distance-map config)})))
+
+(defn get-transport-details
+  [proxy input config]
   (let [distance-map (get-distance proxy (:origin input) (:dest input))]
     (if-not (:error-message distance-map)
-      (wrap-response (conj distance-map {:price (calculate (:total-distance-m distance-map) km-factor)}))
+      (if (transport-in-belgrade? input config)
+        (get-response calculate-belgrade-price distance-map config)
+        (get-response calculate-price distance-map config))
       (error-response (:error-flag distance-map) (:error-message distance-map)))))
 
-(defn calculate-price [proxy input km-factor]
+(defn handle-request
+  [proxy input config]
   (if (valid-input-data? input)
-    (do-calculate-price proxy input km-factor)
+    (get-transport-details proxy input config)
     (error-response :invalid-request (str "Input data is not valid!"))))
 
-(defn transport-price-endpoint [config]
+(defn transport-price-endpoint
+  [config]
   (context "/api" []
-           (POST "/" req (calculate-price
+           (POST "/" req (handle-request
                           (:google-api config)
                           (:params req)
-                          (:km-factor config)))))
+                          (:transport-config config)))))
