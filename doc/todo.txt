@@ -1,7 +1,6 @@
-1. Provera da li je u bgu - cljs
-2. loging
-3. UX i dizajn
-4. release
+1. loging
+2. UX i dizajn
+3. release
 ------------------------------
 Hard core bayo moj + whey
 
