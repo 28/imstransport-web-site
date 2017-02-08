@@ -11,3 +11,6 @@ pom.xml.asc
 /profiles.clj
 /dev/resources/local.edn
 /dev/src/local.clj
+/imstransport-web-site.iml
+/.idea/
+.idea/
