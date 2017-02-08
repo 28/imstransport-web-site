@@ -3,7 +3,7 @@
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.8.51"]
+                 [org.clojure/clojurescript "1.9.456"]
                  [com.stuartsierra/component "0.3.1"]
                  [compojure "1.5.1"]
                  [duct "0.8.2"]
@@ -38,7 +38,8 @@
      {:main "cljs.map"
       :output-to     "target/cljsbuild/imstransport_web_site/public/js/main.js"
       :optimizations :advanced
-      :closure-extra-annotations #{"api" "observable"}}}]}
+      :closure-extra-annotations #{"api" "observable"}
+      :closure-warnings {:externs-validation :off}}}]}
   :aliases {"setup"  ["run" "-m" "duct.util.repl/setup"]}
   :profiles
   {:dev  [:project/dev  :profiles/dev]
