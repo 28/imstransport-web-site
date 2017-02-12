@@ -20,22 +20,21 @@
   (let [response-obj (clj->js response)
         price (aget response-obj "price")
         message (str "Cena je: " price " dinara.")]
-    (js/console.log response-obj)
     (js/alert message)))
 
 (defn draw-end-handler [e]
   (let [coords (.getCoordinates (.getGeometry (.-feature e)))
         first-coord (aget coords 0)
-        end-coord (aget coords 1)]
-    (ajax-request
-      {:uri             "/api"
+        end-coord (aget coords 1)
+        req {:uri             "/api"
        :method          :post
        :params          {:origin {:lat (aget first-coord 1) :long (aget first-coord 0)}
                          :dest   {:lat (aget end-coord 1) :long (aget end-coord 0)}}
        :handler         get-price-information
-       :response-format :json
-       :format          :json
-       :keywords?       true})))
+       :response-format (json-response-format {:keywords? true})
+       :format          (json-request-format)
+       :keywords?       true}]
+    (ajax-request req)))
 
 (defn create-transport-map []
   (let [rasterSource (ol.source.OSM. #js {:layer "sat"})
