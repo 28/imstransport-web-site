@@ -1,25 +1,43 @@
 # Api endpoint
+(require [schema.core :as s])
 
 Api endpoint will communicate to client via JSON.
 JSON request should conform to this schema:
 
 {:origin {:lat s/Num :long s/Num}
- :dest {:lat s/Num :long s/Num}
- :in-belgrade s/Bool}
+ :dest {:lat s/Num :long s/Num}}
 
 JSON string example:
 
-{"origin":{"lat":1,"long":2},"dest":{"lat":3,"long":4},"in-belgrade":true}
+{"origin":{"lat":1,"long":2},"dest":{"lat":3,"long":4}}
 
-:origin map represents the start location of transport with its latidute and longitude. :dest map is the destination location with its latidute and longitude. :in-belgrade parameter should indicate if the transport will be done in the boundaries of
-Belgrade city or not.
+:origin - represents the start location of transport with its latidute and longitude.
+:dest - the destination location with its latidute and longitude.
 
 JSON response will conform to this schema:
 
-{:price s/Num}
+{:destination-addresses [s/Str]
+ :origin-addresses [s/Str]
+ :total-distance s/Str
+ :total-duration s/Str
+ :total-distance-m s/Num
+ :total-duration-s s/Num
+ :price s/Num}
+
+:destination-addresses - represents a collection of addresses of the destination.
+:origin-addresses - represents a collection of addresses of the origin locations.
+:total-distance - total distance in km as a formated string.
+:total-duration - total travel duration in h as as formated string.
+:total-distance-m - total distance in m.
+:total-duration-s - total duration in s.
+:price - transport price value
 
 JSON string example:
 
-{"price":100}
-
-This indicates the price of the transport.
+{"destination-addresses": "San Francisco, CA, USA",
+ "origin-addresses": "Vancouver, BC, Canada",
+ "total-distance": "1,528 km",
+ "total-duration": "14 hours 53 mins",
+ "total-distance-m": "1528264",
+ "total-duration-s": "53562",
+ "price": "10000"}
