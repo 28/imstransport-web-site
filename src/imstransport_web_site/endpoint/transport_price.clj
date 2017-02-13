@@ -38,11 +38,11 @@
 (defn- transport-not-in-serbia?
   [data-map]
   ;; TODO - Check coordinates here
-  true)
+  false)
 
 (defn- response-not-in-serbia
   [data-map]
-  {:info-message})
+  {:info-message nil})
 
 (defn- transport-in-belgrade?
   [data-map]
@@ -54,10 +54,10 @@
   (wrap-response (conj dm {:price price})))
 
 (defn- response-not-in-belgrade
-  [{dm :dm dist {:total-distance-m dm} fix :fixed-price-part km :km-factor}]
+  [{dm :dm fix :fixed-price-part km :km-factor}]
   (wrap-response (conj
                   dm
-                  {:price (calculate-out-belgrade-price fix dist km)})))
+                  {:price (calculate-out-belgrade-price fix (:total-distance-m dm) km)})))
 
 (defn get-transport-details
   [proxy config {origin :origin dest :dest :as input}]
@@ -77,7 +77,7 @@
   [proxy config input]
   (if (valid-input-data? input)
     (get-transport-details proxy input config)
-    (error-response :invalid-request (str "Input data is not valid!"))))
+    (error-response :invalid-request "Input data is not valid!")))
 
 (defn transport-price-endpoint
   [config]

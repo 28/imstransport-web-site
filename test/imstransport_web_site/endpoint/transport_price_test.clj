@@ -11,7 +11,8 @@
 
 (def google-api-stub
   (shrub/stub google-proxy/GoogleRoadApiBind
-              {:get-distance {:destination-addresses ["A"]
+              {:get-distance {:success true
+                              :destination-addresses ["A"]
                               :origin-addresses ["B"]
                               :total-distance "1 km"
                               :total-duration "1 h"
@@ -22,7 +23,6 @@
   (-> (transport-price/transport-price-endpoint {:google-api google-api-stub
                                                  :transport-config
                                                  {:km-factor 14
-                                                  :fuel-factor 1
                                                   :fixed-price-part 0
                                                   :bg-fixed-price 2500
                                                   :bg-coord {:ul-lat 4
@@ -47,11 +47,21 @@
 (deftest response-test
   (testing "endpoint returns a response"
     (let [response (execute-request {:origin {:lat 1 :long 2}
-                                     :dest {:lat 3 :long 4}})]
+                                     :dest {:lat 3 :long 4}})
+          r (json/parse-string (:body response) true)]
       (is (= (:status response) 200))
-      (is (= (:price (json/parse-string (:body response) true)) 14))))
+      (is (= (:price r) 14))
+      (is (= (:destination-addresses r) ["A"]))
+      (is (= (:origin-addresses r) ["B"]))
+      (is (= (:total-distance r) "1 km"))
+      (is (= (:total-duration r) "1 h"))
+      (is (= (:total-distance-m r) 1000))
+      (is (= (:total-duration-s r) 60))
+      (is (nil? (:success r)))))
   (testing "endpoint handles a bad request"
     (let [response (execute-request {:origin {:lat 1 :long 2}
-                                     :dest {:lat 3}})]
+                                     :dest {:lat 3}})
+          r (json/parse-string (:body response) true)]
       (is (= (:status response) 400))
-      (is (:error-message (json/parse-string (:body response) true))))))
+      (is (nil? (:price r)))
+      (is (:error-message r)))))

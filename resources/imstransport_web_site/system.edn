@@ -50,7 +50,6 @@
    :dm-base-url dm-base-url}
   :transport-config
   {:km-factor 14
-   :fuel-factor 1
    :fixed-price-part 0
    :bg-fixed-price 2500
    :bg-coord {:ul-lat 1
