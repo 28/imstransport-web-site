@@ -62,7 +62,7 @@
 (defn get-transport-details
   [proxy config {origin :origin dest :dest :as input}]
   (let [distance-map (get-distance proxy origin dest)
-        all-map (merge input config {:dm distance-map})]
+        all-map (merge input config {:dm (dissoc distance-map :success)})]
     (if (:success distance-map)
       (cond
         (transport-not-in-serbia? all-map) (response-not-in-serbia all-map)
