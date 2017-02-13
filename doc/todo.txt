@@ -1,9 +1,17 @@
-1. loging
-2. UX i dizajn
-3. release
+*Web release milestone*
+- Outside Serbia criteria
+- In Belgrade criteria
+- UX
+- Logging
+- Show price results on map
+- Internationalization or just Serbian
+- Proper error handling and reporting
+- Register Web domain
+- Acquire hosting
 ------------------------------
-Hard core bayo moj + whey
+*Future milestones - real hard core*
 
-7. Snap to road feature
-8. DB za sve
-9. Da se cuva kad neko nacrta nesto
+- Snap to road feature
+- Implement DB to store out own geo data
+- Map-centric UX
+- Switch to react?
