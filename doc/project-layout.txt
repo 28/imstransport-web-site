@@ -8,11 +8,14 @@
 │       ├── dev.clj
 │       └── user.clj
 ├── doc
+│   ├── calculate_price_algorhitm.txt
 │   ├── communication-data-structures.txt
 │   ├── figwheel-setup.txt
+│   ├── get_price_info_sequence_diagram.txt
 │   ├── google-distance-matrix-example-request.txt
 │   ├── project-layout.txt
-│   └── todo.txt
+│   ├── todo.txt
+│   └── web_site_layout.txt
 ├── project.clj
 ├── README.md
 ├── resources
@@ -25,6 +28,11 @@
 │       │   ├── css
 │       │   │   └── site.css
 │       │   ├── favicon.ico
+│       │   ├── images
+│       │   │   ├── info
+│       │   │   │   └── info.png
+│       │   │   └── nav
+│       │   │       └── IMSLOGO120px_width.png
 │       │   ├── index.html
 │       │   └── robots.txt
 │       └── system.edn
@@ -52,4 +60,4 @@
     ├── build.sh
     └── update-project-tree.sh
 
-23 directories, 29 files
+26 directories, 34 files
