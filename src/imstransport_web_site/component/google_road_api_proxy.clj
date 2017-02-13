@@ -32,12 +32,14 @@
 
 (defn- error-response
   [flag msg]
-  {:error-flag flag
+  {:success false
+   :error-flag flag
    :error-message (str "Internal error: " msg)})
 
 (defn- convert-results
   [google-response]
-  {:destination-addresses (:destination_addresses google-response)
+  {:success true
+   :destination-addresses (:destination_addresses google-response)
    :origin-addresses (:origin_addresses google-response)
    :total-distance (-> google-response :rows first :elements first :distance :text)
    :total-duration (-> google-response :rows first :elements first :duration :text)

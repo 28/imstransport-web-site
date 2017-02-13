@@ -3,13 +3,17 @@
             [schema.core :as s]
             [imstransport-web-site.component.google-road-api-proxy :refer :all]))
 
-(def TransportData {:origin {:lat s/Num :long s/Num}
-                    :dest {:lat s/Num :long s/Num}}) 
+;; Input data validation
 
-(defn valid-input-data? [data]
+(def ^{:private true} TransportData {:origin {:lat s/Num :long s/Num}
+                                     :dest {:lat s/Num :long s/Num}}) 
+
+(defn- valid-input-data? [data]
   (try (s/validate TransportData data)
        true
        (catch Exception _ false)))
+
+;; Response construction
 
 (defn- wrap-response [body]
   {:body body})
@@ -24,35 +28,53 @@
    :body {:price nil
           :error-message msg}})
 
+;; Transport route and price details
+
+(defn- calculate-out-belgrade-price
+  [fix dist km]
+  (+ fix
+     (int (Math/ceil (* (double (/ dist 1000)) km)))))
+
+(defn- transport-not-in-serbia?
+  [data-map]
+  ;; TODO - Check coordinates here
+  true)
+
+(defn- response-not-in-serbia
+  [data-map]
+  {:info-message})
+
 (defn- transport-in-belgrade?
-  [input config]
+  [data-map]
   ;; TODO - Check coordinates here
   false)
 
-(defn- calculate-belgrade-price
-  [distance-map config]
-  (:bg-fixed-price config))
+(defn- response-in-belgrade
+  [{dm :dm price :bg-fixed-price}]
+  (wrap-response (conj dm {:price price})))
 
-(defn- calculate-price
-  [distance-map config]
-  ;; TODO - Refactor this (with list comprehention)
-  (+ (:fixed-price-part config) (int (Math/ceil (* (double (/ (:total-distance-m distance-map) 1000)) (:km-factor config))))))
-
-(defn- get-response
-  [calc-fn distance-map config]
-  (wrap-response (conj distance-map {:price (calc-fn distance-map config)})))
+(defn- response-not-in-belgrade
+  [{dm :dm dist {:total-distance-m dm} fix :fixed-price-part km :km-factor}]
+  (wrap-response (conj
+                  dm
+                  {:price (calculate-out-belgrade-price fix dist km)})))
 
 (defn get-transport-details
-  [proxy input config]
-  (let [distance-map (get-distance proxy (:origin input) (:dest input))]
-    (if-not (:error-message distance-map)
-      (if (transport-in-belgrade? input config)
-        (get-response calculate-belgrade-price distance-map config)
-        (get-response calculate-price distance-map config))
-      (error-response (:error-flag distance-map) (:error-message distance-map)))))
+  [proxy config {origin :origin dest :dest :as input}]
+  (let [distance-map (get-distance proxy origin dest)
+        all-map (merge input config {:dm distance-map})]
+    (if (:success distance-map)
+      (cond
+        (transport-not-in-serbia? all-map) (response-not-in-serbia all-map)
+        (transport-in-belgrade? all-map) (response-in-belgrade all-map)
+        :else (response-not-in-belgrade all-map))
+      (error-response (:error-flag distance-map)
+                      (:error-message distance-map)))))
+
+;; Request handling
 
 (defn handle-request
-  [proxy input config]
+  [proxy config input]
   (if (valid-input-data? input)
     (get-transport-details proxy input config)
     (error-response :invalid-request (str "Input data is not valid!"))))
@@ -62,5 +84,5 @@
   (context "/api" []
            (POST "/" req (handle-request
                           (:google-api config)
-                          (:params req)
-                          (:transport-config config)))))
+                          (:transport-config config)
+                          (:params req)))))
