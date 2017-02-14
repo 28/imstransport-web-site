@@ -76,7 +76,7 @@
 (defn handle-request
   [proxy config input]
   (if (valid-input-data? input)
-    (get-transport-details proxy input config)
+    (get-transport-details proxy config input)
     (error-response :invalid-request "Input data is not valid!")))
 
 (defn transport-price-endpoint
