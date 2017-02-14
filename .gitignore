@@ -14,3 +14,4 @@ pom.xml.asc
 /imstransport-web-site.iml
 /.idea/
 .idea/
+*.log

@@ -1,13 +1,15 @@
 {:components
  {:app  #var duct.component.handler/handler-component
   :http #var ring.component.jetty/jetty-server
-  :google-api #var imstransport-web-site.component.google-road-api-proxy/google-road-api-proxy}
+  :google-api #var imstransport-web-site.component.google-road-api-proxy/google-road-api-proxy
+  :logger #var imstransport-web-site.component.logger-component/logger-component}
  :endpoints
  {:transport-price #var imstransport-web-site.endpoint.transport-price/transport-price-endpoint}
  :dependencies
  {:http [:app]
   :app  [:transport-price]
-  :transport-price [:google-api :transport-config]}
+  :transport-price [:google-api :transport-config :logger]
+  :google-api [:logger]}
  :config
  {:app
   {:middleware
@@ -59,4 +61,7 @@
               :bl-lat 1
               :bl-long 1
               :br-lat 1
-              :br-long 1}}}}
+              :br-long 1}}
+  :logger
+  {:global-level :info
+   :filename "ims.log"}}}

@@ -22,7 +22,8 @@
                  [org.omcljs/om "1.0.0-alpha46"]
                  [prismatic/schema "1.1.3"]
                  [cheshire "5.6.3"]
-                 [clj-http "2.3.0"]]
+                 [clj-http "2.3.0"]
+                 [com.taoensso/timbre "4.8.0"]]
   :plugins [[lein-environ "1.0.3"]
             [lein-cljsbuild "1.1.2"]]
   :main ^:skip-aot imstransport-web-site.main
