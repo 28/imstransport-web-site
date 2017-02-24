@@ -2,7 +2,8 @@
   (:require [compojure.core :refer :all]
             [schema.core :as s]
             [imstransport-web-site.component.google-road-api-proxy :refer :all]
-            [imstransport-web-site.component.message-repository :refer :all]))
+            [imstransport-web-site.component.message-repository :refer :all]
+            [imstransport-web-site.component.logger-component :refer :all]))
 
 ;; Input data validation
 
@@ -17,9 +18,11 @@
 ;; Response construction
 
 (defn- wrap-response [body]
+  (log :info "OK response: " body)
   {:body body})
 
 (defn- error-response [flag msg-repo & msg-args]
+  (log :info "Error response: " flag msg-args)
   {:status (cond
              (= flag :invalid-google-request) 400
              (= flag :internal) 500
@@ -85,6 +88,7 @@
 
 (defn handle-request
   [proxy config input msg-repo]
+  (log :info "Handling transport price request" input)
   (if (valid-input-data? input)
     (get-transport-details proxy config input msg-repo)
     (error-response :invalid-request msg-repo)))

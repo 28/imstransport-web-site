@@ -15,6 +15,8 @@
     (is (= (get-message repo :flag-1 '(1)) "Message1")))
   (testing "Repo will return argumented message with one arg"
     (is (= (get-message repo :flag-2 "A") "Message2 with A")))
+  (testing "Repo will return argumented message with one number arg"
+    (is (= (get-message repo :flag-2 1) "Message2 with 1")))
   (testing "Repo will return argumented message with one arg list"
     (is (= (get-message repo :flag-2 '("A")) "Message2 with A")))
   (testing "Repo will return argumented message with additional arguments list"

@@ -3,7 +3,8 @@
             [clojure.string :as st]
             [imstransport-web-site.util.url :as url]
             [cheshire.core :as json]
-            [clj-http.client :as http]))
+            [clj-http.client :as http]
+            [imstransport-web-site.component.logger-component :refer :all]))
 
 (def ^:private google-api-format "json")
 (def ^:private google-api-units "metric")
@@ -52,9 +53,11 @@
 (defrecord GoogleRoadApiProxy [api-key base-url]
   GoogleRoadApiBind
   (get-distance [this origin destination]
+    (log :info "get-distance" origin destination)
     (try (let [u (request-url base-url api-key origin destination)
                json-response (http/get u {:accept :json})
                response (json/parse-string (:body json-response) true)]
+           (log :info "Google response: " response)
            (if (status-ok? response)
              (convert-results response)
              (error-response :invalid-google-request (:status response))))
