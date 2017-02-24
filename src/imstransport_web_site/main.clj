@@ -7,7 +7,7 @@
               [clojure.java.io :as io]))
 
 (defn -main [& args]
-  (let [google-conf (clojure.edn/read-string (slurp (io/file (io/resource "imstransport_web_site/google.edn"))))
+  (let [google-conf (clojure.edn/read-string (slurp (io/resource "imstransport_web_site/google.edn")))
         bindings {'http-port (Integer/parseInt (:port env "3000"))
                   'dm-api-key (-> google-conf :dm-api-key)
                   'dm-base-url (-> google-conf :dm-base-url)}
