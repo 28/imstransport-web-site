@@ -28,6 +28,7 @@
   :plugins [[lein-environ "1.0.3"]
             [lein-cljsbuild "1.1.2"]]
   :main ^:skip-aot imstransport-web-site.main
+  :uberjar-name "ims-standalone.jar"
   :target-path "target/%s/"
   :resource-paths ["resources" "target/cljsbuild"]
   :prep-tasks [["javac"] ["cljsbuild" "once"] ["compile"]]
