@@ -51,8 +51,8 @@
   {:dm-api-key dm-api-key
    :dm-base-url dm-base-url}
   :transport-config
-  {:km-factor 14
-   :fixed-price-part 0
+  {:km-factor 24
+   :fixed-price-part 1000
    :bg-fixed-price 2500
    :bg-coord {:ul-lat 1
               :ul-long 1
@@ -64,5 +64,5 @@
               :br-long 1}}
   :logger
   {:global-level :info
-   :filename "ims.log"}
+   :filename "logs/ims.log"}
   :messages {:filename "imstransport_web_site/messages.properties"}}}
