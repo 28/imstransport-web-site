@@ -2,10 +2,11 @@
 - Outside Serbia criteria
 - In Belgrade criteria
 - UX
-- Logging
+- [x] Logging
 - Show price results on map
-- Internationalization or just Serbian
-- Proper error handling and reporting
+- [x/2] Internationalization or just Serbian
+- [x] Proper error handling and reporting
+- [x] Deploy on Heroku
 - Register Web domain
 - Acquire hosting
 ------------------------------
