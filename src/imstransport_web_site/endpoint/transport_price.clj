@@ -26,7 +26,7 @@
              (= flag :invalid-request) 400
              :else 500)
    :headers {"Content-Type" "application/json"}
-   :body {:price nil
+   :body {:error-flag flag
           :error-message (get-message msg-repo flag msg-args)}})
 
 ;; Transport route and price details
@@ -42,8 +42,9 @@
   false)
 
 (defn- response-not-in-serbia
-  [data-map]
-  {:info-message nil})
+  [{:keys [dm repo]}]
+  (wrap-response (conj dm
+                       {:info-message (get-message repo :not-in-serbia nil)})))
 
 (defn- transport-in-belgrade?
   [data-map]
@@ -51,19 +52,26 @@
   false)
 
 (defn- response-in-belgrade
-  [{dm :dm price :bg-fixed-price}]
-  (wrap-response (conj dm {:price price})))
+  [{dm :dm price :bg-fixed-price repo :repo}]
+  (wrap-response (conj dm
+                       {:price price
+                        :info-message (get-message repo :in-belgrade price)})))
 
 (defn- response-not-in-belgrade
-  [{dm :dm fix :fixed-price-part km :km-factor}]
-  (wrap-response (conj
-                  dm
-                  {:price (calculate-out-belgrade-price fix (:total-distance-m dm) km)})))
+  [{dm :dm fix :fixed-price-part km :km-factor repo :repo}]
+  (let [price (calculate-out-belgrade-price fix (:total-distance-m dm) km)]
+    (wrap-response (conj
+                    dm
+                    {:price price
+                     :info-message (get-message repo :not-in-belgrade price)}))))
 
 (defn get-transport-details
   [proxy config {origin :origin dest :dest :as input} msg-repo]
   (let [distance-map (get-distance proxy origin dest)
-        all-map (merge input config {:dm (dissoc distance-map :success)})]
+        all-map (merge input
+                       config
+                       {:dm (dissoc distance-map :success)
+                        :repo msg-repo})]
     (if (:success distance-map)
       (cond
         (transport-not-in-serbia? all-map) (response-not-in-serbia all-map)

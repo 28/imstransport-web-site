@@ -63,11 +63,12 @@
       (is (= (:total-duration r) "1 h"))
       (is (= (:total-distance-m r) 1000))
       (is (= (:total-duration-s r) 60))
-      (is (nil? (:success r)))))
+      (is (= (:info-message r) "msg"))
+      (is (nil? (:success r))))) ;; succes flag is removed from end map
   (testing "endpoint handles a bad request"
     (let [response (execute-request {:origin {:lat 1 :long 2}
                                      :dest {:lat 3}})
           r (json/parse-string (:body response) true)]
       (is (= (:status response) 400))
-      (is (nil? (:price r)))
+      (is (= (:error-flag r) "invalid-request"))
       (is (= (:error-message r) "msg")))))
