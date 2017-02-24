@@ -1,1 +1,1 @@
-web: java -jar target/uberjar/a-standalone.jar
+web: java -jar target/uberjar/ims-standalone.jar
