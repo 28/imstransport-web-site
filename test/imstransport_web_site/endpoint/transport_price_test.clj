@@ -7,7 +7,8 @@
             [ring.middleware.keyword-params :as kwp]
             [cheshire.core :as json]
             [imstransport-web-site.component.google-road-api-proxy :as google-proxy]
-            [imstransport-web-site.endpoint.transport-price :as transport-price]))
+            [imstransport-web-site.endpoint.transport-price :as transport-price]
+            [imstransport-web-site.component.message-repository :as repo]))
 
 (def google-api-stub
   (shrub/stub google-proxy/GoogleRoadApiBind
@@ -18,6 +19,10 @@
                               :total-duration "1 h"
                               :total-distance-m 1000
                               :total-duration-s 60}}))
+
+(def repo-stub
+  (shrub/stub repo/IMessageRepository
+              {:get-message "msg"}))
 
 (def handler
   (-> (transport-price/transport-price-endpoint {:google-api google-api-stub
@@ -32,7 +37,8 @@
                                                              :bl-lat 4
                                                              :bl-long 4
                                                              :br-lat 4
-                                                             :br-long 4}}})
+                                                             :br-long 4}}
+                                                 :messages repo-stub})
       kwp/wrap-keyword-params
       rj/wrap-json-params
       rj/wrap-json-response)) ;; This happens on system start here is only replicated - todo - see if there is a better way for this.
@@ -64,4 +70,4 @@
           r (json/parse-string (:body response) true)]
       (is (= (:status response) 400))
       (is (nil? (:price r)))
-      (is (:error-message r)))))
+      (is (= (:error-message r) "msg")))))

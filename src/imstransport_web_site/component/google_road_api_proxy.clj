@@ -34,7 +34,7 @@
   [flag msg]
   {:success false
    :error-flag flag
-   :error-message (str "Internal error: " msg)})
+   :error-message msg})
 
 (defn- convert-results
   [google-response]
