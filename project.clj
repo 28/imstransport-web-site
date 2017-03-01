@@ -56,7 +56,7 @@
                                   [reloaded.repl "0.2.3"]
                                   [org.clojure/tools.namespace "0.2.11"]
                                   [org.clojure/tools.nrepl "0.2.12"]
-                                  [eftest "0.1.1"]
+                                  [eftest "0.1.3"]
                                   [com.gearswithingears/shrubbery "0.4.1"]
                                   [kerodon "0.8.0"]
                                   [binaryage/devtools "0.8.2"]
