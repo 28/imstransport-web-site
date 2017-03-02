@@ -19,7 +19,8 @@
 
 (defn- wrap-response [body]
   (log :info "OK response: " body)
-  {:body body})
+  {:headers {"Content-Type" "application/json; charset=utf-8"}
+   :body body})
 
 (defn- error-response [flag msg-repo & msg-args]
   (log :info "Error response: " flag msg-args)
@@ -28,7 +29,7 @@
              (= flag :internal) 500
              (= flag :invalid-request) 400
              :else 500)
-   :headers {"Content-Type" "application/json"}
+   :headers {"Content-Type" "application/json; charset=utf-8"}
    :body {:error-flag flag
           :error-message (get-message msg-repo flag msg-args)}})
 

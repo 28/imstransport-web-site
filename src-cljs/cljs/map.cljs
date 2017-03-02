@@ -18,8 +18,9 @@
 
 (defn get-price-information [[ok response]]
   (let [response-obj (clj->js response)
-        price (aget response-obj "price")
-        message (str "Cena je: " price " dinara.")]
+        message (if (aget response-obj "info-message")
+                  (aget response-obj "info-message")
+                  (aget response-obj "error-message"))]
     (js/alert message)))
 
 (defn draw-end-handler [e]
