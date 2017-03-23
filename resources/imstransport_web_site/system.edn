@@ -54,14 +54,8 @@
   {:km-factor 24
    :fixed-price-part 1000
    :bg-fixed-price 2500
-   :bg-coord {:ul-lat 1
-              :ul-long 1
-              :ur-lat 1
-              :ur-long 1
-              :bl-lat 1
-              :bl-long 1
-              :br-lat 1
-              :br-long 1}}
+   :bg-poly bg-poly
+   :serbia-poly serbia-poly}
   :logger
   {:global-level :info
    :filename "logs/ims.log"}

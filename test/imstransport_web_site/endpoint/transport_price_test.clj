@@ -29,15 +29,7 @@
                                                  :transport-config
                                                  {:km-factor 14
                                                   :fixed-price-part 0
-                                                  :bg-fixed-price 2500
-                                                  :bg-coord {:ul-lat 4
-                                                             :ul-long 4
-                                                             :ur-lat 4
-                                                             :ur-long 4
-                                                             :bl-lat 4
-                                                             :bl-long 4
-                                                             :br-lat 4
-                                                             :br-long 4}}
+                                                  :bg-fixed-price 2500}
                                                  :messages repo-stub})
       kwp/wrap-keyword-params
       rj/wrap-json-params

@@ -1,7 +1,7 @@
 (ns imstransport-web-site.component.google-road-api-proxy
   (:require [com.stuartsierra.component :as component]
             [clojure.string :as st]
-            [imstransport-web-site.util.url :as url]
+            [imstransport-web-site.util.util :as url]
             [cheshire.core :as json]
             [clj-http.client :as http]
             [imstransport-web-site.component.logger-component :refer :all]))
