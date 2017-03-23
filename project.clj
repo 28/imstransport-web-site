@@ -43,7 +43,10 @@
       :optimizations :advanced
       :closure-extra-annotations #{"api" "observable"}
       :closure-warnings {:externs-validation :off}}}]}
-  :aliases {"setup"  ["run" "-m" "duct.util.repl/setup"]}
+  :aliases {"setup"  ["run" "-m" "duct.util.repl/setup"]
+            "deploy" ["do"
+                      ["vcs" "assert-committed"]
+                      ["vcs" "push" "heroku" "master"]]}
   :profiles
   {:dev  [:project/dev  :profiles/dev]
    :test [:project/test :profiles/test]
@@ -69,23 +72,3 @@
                    :repl-options {:init-ns user}
                    :env {:port "3000"}}
    :project/test  {}})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
