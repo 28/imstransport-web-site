@@ -58,5 +58,6 @@
    :serbia-poly serbia-poly}
   :logger
   {:global-level :info
-   :filename "logs/ims.log"}
+   :filename "logs/ims.log"
+   :rolling-pattern :daily}
   :messages {:filename "imstransport_web_site/messages.properties"}}}

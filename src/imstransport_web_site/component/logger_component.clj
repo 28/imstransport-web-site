@@ -1,14 +1,15 @@
 (ns imstransport-web-site.component.logger-component
   (:require [com.stuartsierra.component :as component]
             [taoensso.timbre :as timbre]
-            [taoensso.timbre.appenders.core :as appenders]))
+            [taoensso.timbre.appenders.3rd-party.rolling :as appender]))
 
 (defrecord LoggerComponent [config]
   component/Lifecycle
   (start [this]
     (timbre/merge-config!
      {:level (:global-level config)
-      :appenders {:spit (appenders/spit-appender {:fname (:filename config)})
+      :appenders {:rolling (appender/rolling-appender {:path (:filename config)
+                                                       :pattern (:rolling-pattern config)})
                   :println {:enabled? false}}})
     (timbre/debug "Logger service started!")
     this)
