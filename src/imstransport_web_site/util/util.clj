@@ -15,7 +15,12 @@
   [polygon]
   (let [polygon-points (partition 2 polygon)
         polygon-points-number (count polygon-points)]
-    (map-indexed (fn [i p] (list p (nth polygon-points (mod (inc i) polygon-points-number)))) polygon-points)))
+    (map-indexed (fn [i p]
+                   (let [n (nth polygon-points (mod (inc i) polygon-points-number))]
+                     (if (> (first p) (first n))
+                       (list n p)
+                       (list p n))))
+                 polygon-points)))
 
 (defn intersects?
   [[a b :as side] point]
@@ -26,19 +31,18 @@
         px (second point)
         py* (first point)
         py (if (or (= py* ay) (= py* by))
-             (+ py* 0.0001)
+             (+ py* 0.000001)
              py*)]
     (cond
       (or
-       (< py ay)
-       (> py by)) false
-
-      (> px (max ax bx)) false
+        (< py ay)
+        (> py by)
+        (> px (max ax bx))) false
       
       (< px (min ax bx)) true
-
-      :else (let [red (if (not= ax bx) (/ (- by ay) (bx ax)) 0)
-                  blue (if (not= ax px) (/ (- by ay) (px ax)) 0)]
+      
+      :else (let [red (if (not= bx ax) (/ (- by ay) (- bx ax)) Double/MAX_VALUE)
+                  blue (if (not= px ax) (/ (- py ay) (- px ax)) Double/MAX_VALUE)]
               (>= blue red)))))
 
 (defn is-in-polygon?
