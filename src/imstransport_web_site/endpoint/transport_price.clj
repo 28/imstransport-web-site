@@ -3,12 +3,13 @@
             [schema.core :as s]
             [imstransport-web-site.component.google-road-api-proxy :refer :all]
             [imstransport-web-site.component.message-repository :refer :all]
-            [imstransport-web-site.component.logger-component :refer :all]))
+            [imstransport-web-site.component.logger-component :refer :all]
+            [imstransport-web-site.util.util :as util]))
 
 ;; Input data validation
 
 (def ^{:private true} TransportData {:origin {:lat s/Num :long s/Num}
-                                     :dest {:lat s/Num :long s/Num}}) 
+                                     :dest {:lat s/Num :long s/Num}})
 
 (defn- valid-input-data? [data]
   (try (s/validate TransportData data)
@@ -41,9 +42,9 @@
      (int (Math/ceil (* (double (/ dist 1000)) km)))))
 
 (defn- transport-not-in-serbia?
-  [data-map]
-  ;; TODO - Check coordinates here
-  false)
+  [{:keys [serbia-poly origin dest]}]
+  (not (and (util/is-in-polygon? serbia-poly (vals origin))
+            (util/is-in-polygon? serbia-poly (vals dest)))))
 
 (defn- response-not-in-serbia
   [{:keys [dm repo]}]
@@ -51,9 +52,9 @@
                        {:info-message (get-message repo :not-in-serbia nil)})))
 
 (defn- transport-in-belgrade?
-  [data-map]
-  ;; TODO - Check coordinates here
-  false)
+  [{:keys [bg-poly origin dest]}]
+  (and (util/is-in-polygon? bg-poly (vals origin))
+       (util/is-in-polygon? bg-poly (vals dest))))
 
 (defn- response-in-belgrade
   [{dm :dm price :bg-fixed-price repo :repo}]

@@ -29,7 +29,15 @@
                                                  :transport-config
                                                  {:km-factor 14
                                                   :fixed-price-part 0
-                                                  :bg-fixed-price 2500}
+                                                  :bg-fixed-price 2500
+                                                  :bg-poly '(((1 1) (1 1))
+                                                             ((1 1) (1 1))
+                                                             ((1 1) (1 1))
+                                                             ((1 1) (1 1)))
+                                                  :serbia-poly '(((1 1) (1 10))
+                                                                 ((1 10) (10 10))
+                                                                 ((10 1) (10 10))
+                                                                 ((1 1) (10 1)))}
                                                  :messages repo-stub})
       kwp/wrap-keyword-params
       rj/wrap-json-params

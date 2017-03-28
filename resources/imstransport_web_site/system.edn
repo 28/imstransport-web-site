@@ -52,7 +52,7 @@
    :dm-base-url dm-base-url}
   :transport-config
   {:km-factor 24
-   :fixed-price-part 1000
+   :fixed-price-part 2000
    :bg-fixed-price 2500
    :bg-poly bg-poly
    :serbia-poly serbia-poly}
