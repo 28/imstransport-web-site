@@ -92,6 +92,7 @@
 
 .welcome #map {
     min-height:500px;
+    padding: 10px;
 }
 
 .welcome nav {
@@ -99,7 +100,52 @@
     line-height: 2.1;
 }
 
-footer {
+.welcome .adver {
+    text-align: center;
+    font-size: 120%;
+}
+
+.welcome .map-section-info {
+    text-align: center;
+    margin: 10px;
+}
+
+.welcome .map-section-disclamer {
+    text-align: center;
+    font-style: italic;
+    font-size: 90%;
+}
+
+.welcome .bord {
+    position: relative;
+}
+.welcome .bord:before, .bord:after {
+    content: "";
+    position: absolute;
+}
+.welcome .bord:before {
+    top: -3px;
+    left: -3px;
+    bottom: 0;
+    right: -3px;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eee), to(#fff));
+    background-image: -webkit-linear-gradient(#eee, #fff);
+    background-image: -moz-linear-gradient(#eee, #fff);
+    background-image: -o-linear-gradient(#eee, #fff);
+    z-index: -2;
+}
+.welcome .bord:after {
+    z-index: -1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(144,144,144,0.2);
+}
+
+.welcome footer {
     text-align:center;
-    background-color: #eee;
+    background-color: #FFFFFF;
+    padding-top: 15px;
+    font-size: small;
 }
