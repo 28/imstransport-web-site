@@ -9,7 +9,7 @@
 
 (defrecord MessageRepository [filename]
   component/Lifecycle
-  (start [this] 
+  (start [this]
     (let [msg (p/load-from (io/resource filename))
           msg-map (p/properties->map msg true)]
       (merge this msg-map)))
