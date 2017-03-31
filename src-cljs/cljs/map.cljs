@@ -6,9 +6,9 @@
             ol.layer.Tile
             ol.View
             ol.proj
-
             ol.control.Zoom
             ol.control.Control
+            ol.Overlay
             ol.extent
             ol.source.OSM
             ol.interaction.Draw
@@ -17,26 +17,27 @@
             [ol.animation :as a :refer [pan bounce]]
             [goog.dom :as dom]
             [goog.events :as events]
+            [goog.style :as style]
             [ajax.core :refer [json-response-format json-request-format ajax-request]]
             [cljs.reader :as reader]))
-
 
 (enable-console-print!)
 
 (def belgrade-center
    #js [20.4489 44.7866])
 
-(def default-resolution)
-
-
-(defn get-price-information [vSource]
+(defn get-price-information [end-coord map v-source description-overlay toolbar-element]
     (fn [[ok response]]
       (let [response-obj (clj->js response)
             message (if (aget response-obj "info-message")
                       (aget response-obj "info-message")
-                      (aget response-obj "error-message"))]
-         (.clear vSource)
-         (js/alert message))))
+                      (aget response-obj "error-message"))
+            destination-addresses (aget response-obj "destination-addresses")
+            origin-addresses (aget response-obj "origin-addresses")]
+
+        (dom/setTextContent toolbar-element message)
+        (.setPosition description-overlay end-coord)
+        (style/setStyle toolbar-element #js {:display ""}))))
 
 
 (defn center-map [map]
@@ -49,17 +50,21 @@
       (.beforeRender map bounce)
       (.setZoom view 11))))
 
+(defn draw-start-handler [v-source toolbar-element]
+  (fn [e]
+     (.clear v-source)
+     (style/setStyle toolbar-element #js {"display" "none"})))
 
-(defn draw-end-handler [vSource]
+(defn draw-end-handler [map v-source description-overlay toolbar-element]
   (fn [e]
     (let [coords (.getCoordinates (.getGeometry (.-feature e)))
           first-coord (aget coords 0)
-          end-coord (aget coords 1)
+          end-coord  (last coords)
           req {:uri             "/api"
                :method          :post
                :params          {:origin {:lat (aget first-coord 1) :long (aget first-coord 0)}
                                  :dest   {:lat (aget end-coord 1) :long (aget end-coord 0)}}
-               :handler         (get-price-information vSource)
+               :handler         (get-price-information end-coord map v-source description-overlay toolbar-element)
                :response-format (json-response-format {:keywords? true})
                :format          (json-request-format)
                :keywords?       true}]
@@ -79,6 +84,8 @@
         vectorLayer (ol.layer.Vector. #js {:source vectorSource})
         drawInteraction (ol.interaction.Draw. #js {:source vectorSource
                                                    :type   "LineString"})
+        toolbar-element (dom/getElement "description-toolbar")
+        descriptionOverlay   (ol.Overlay. #js {:element toolbar-element})
         resetButton    (dom/createDom "button" (clj->js {"class" "ol-control-button" "id" "resetButton" "title" "Centriraj na Beograd"}))
         controlElement (dom/createDom "div" (clj->js {"class" "reset-position ol-unselectable ol-control"}))
         zoomControl (ol.control.Zoom. #js {})
@@ -92,10 +99,10 @@
     (.addControl map zoomControl)
     (.addControl map (ol.control.Control. #js {:element controlElement}))
     (.addInteraction map drawInteraction)
+    (.addOverlay map descriptionOverlay)
     (events/listen resetButton "click" (center-map map))
-    (.log js/console "Rezolucija")
-    (.log js/console (.getResolution view))
-    (.on drawInteraction "drawend" (draw-end-handler vectorSource))))
+    (.on drawInteraction "drawend" (draw-end-handler map vectorSource descriptionOverlay toolbar-element))
+    (.on drawInteraction "drawstart" (draw-start-handler  vectorSource toolbar-element))))
 
 (set! (.-onload js/window)
       (fn []
