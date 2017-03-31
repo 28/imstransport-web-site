@@ -1,12 +1,13 @@
 *Web release milestone*
-- Outside Serbia criteria
-- In Belgrade criteria
+- [x]Outside Serbia criteria
+- [X]In Belgrade criteria
 - UX
 - [x] Logging
-- Show price results on map
-- [x/2] Internationalization or just Serbian
+- [x/2]Show price results on map
+- [x] Internationalization or just Serbian
 - [x] Proper error handling and reporting
 - [x] Deploy on Heroku
+- Add home coords as starting argument to Google
 - Register Web domain
 - Acquire hosting
 ------------------------------
