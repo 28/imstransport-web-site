@@ -149,3 +149,7 @@
     padding-top: 15px;
     font-size: small;
 }
+.reset-position {
+  top: 60px;
+  left: .5em;
+}
