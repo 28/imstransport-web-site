@@ -100,6 +100,10 @@
     line-height: 2.1;
 }
 
+.welcome nav a {
+    color: black;
+}
+
 .welcome .adver {
     text-align: center;
     font-size: 120%;
@@ -149,7 +153,8 @@
     padding-top: 15px;
     font-size: small;
 }
-.reset-position {
+
+.welcome .reset-position {
   top: 60px;
   left: .5em;
 }
