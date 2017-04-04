@@ -154,7 +154,7 @@
     font-size: small;
 }
 
-.welcome .reset-position {
-  top: 60px;
-  left: .5em;
+.welcome .reset-position {    
+    top: 4em;
+    left: .5em;
 }
