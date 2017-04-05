@@ -4,10 +4,19 @@
             [imstransport-web-site.util.util :as url]
             [cheshire.core :as json]
             [clj-http.client :as http]
+            [schema.core :as s]
             [imstransport-web-site.component.logger-component :refer :all]))
 
 (def ^:private google-api-format "json")
 (def ^:private google-api-units "metric")
+(def ^:private GoogleResponseSchema {:destination_addresses [s/Str]
+                                     :origin_addresses [s/Str]
+                                     :rows [{:elements [{:distance {:text s/Str
+                                                                    :value s/Num}
+                                                         :duration {:text s/Str
+                                                                    :value s/Num}
+                                                         :status s/Str}]}]
+                                     :status s/Str})
 
 (defn- format-coordinates
   [c]
@@ -20,16 +29,24 @@
                           "origins" (format-coordinates origin)
                           "destinations" (format-coordinates dest)
                           "key" api-key})))
+
+(defn- validate-google-data
+  [data]
+  (try (s/validate GoogleResponseSchema data)
+       true
+       (catch Exception _ false)))
+
 (defn- status-ok?
   [resp]
-  (and
-   (= (:status resp) "OK")
-   (every?
-    (fn [e]
-      (every?
-       (fn [e1] (= (:status e1) "OK"))
-       (:elements e)))
-    (:rows resp))))
+  (when (validate-google-data resp)
+    (and
+     (= (:status resp) "OK")
+     (every?
+      (fn [e]
+        (every?
+         (fn [e1] (= (:status e1) "OK"))
+         (:elements e)))
+      (:rows resp)))))
 
 (defn- error-response
   [flag msg]
