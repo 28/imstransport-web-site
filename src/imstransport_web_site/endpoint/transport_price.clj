@@ -47,9 +47,8 @@
             (util/is-in-polygon? serbia-poly (vals dest)))))
 
 (defn- response-not-in-serbia
-  [{:keys [dm repo]}]
-  (wrap-response (conj dm
-                       {:info-message (get-message repo :not-in-serbia nil)})))
+  [{:keys [repo]}]
+  (wrap-response {:info-message (get-message repo :not-in-serbia nil)}))
 
 (defn- transport-in-belgrade?
   [{:keys [bg-poly origin dest]}]
@@ -72,19 +71,18 @@
 
 (defn get-transport-details
   [proxy config {origin :origin dest :dest :as input} msg-repo]
-  (let [distance-map (get-distance proxy origin dest)
-        all-map (merge input
-                       config
-                       {:dm (dissoc distance-map :success)
-                        :repo msg-repo})]
-    (if (:success distance-map)
-      (cond
-        (transport-not-in-serbia? all-map) (response-not-in-serbia all-map)
-        (transport-in-belgrade? all-map) (response-in-belgrade all-map)
-        :else (response-not-in-belgrade all-map))
-      (error-response (:error-flag distance-map)
-                      msg-repo
-                      (:error-message distance-map)))))
+  (let [all-map (merge input config {:repo msg-repo})]
+    (if (transport-not-in-serbia? all-map)
+      (response-not-in-serbia all-map)
+      (let [distance-map (get-distance proxy origin dest)]
+        (if (:success distance-map)
+          (let [full-map (merge all-map {:dm (dissoc distance-map :success)})]
+            (if (transport-in-belgrade? full-map)
+              (response-in-belgrade full-map)
+              (response-not-in-belgrade full-map)))
+          (error-response (:error-flag distance-map)
+                          msg-repo
+                          (:error-message distance-map)))))))
 
 ;; Request handling
 
