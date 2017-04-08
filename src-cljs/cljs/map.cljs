@@ -36,11 +36,19 @@
                         (aget response-obj "info-message")
                         (aget response-obj "error-message"))
               destination-addresses (aget response-obj "destination-addresses")
-              origin-addresses (aget response-obj "origin-addresses")]
+              origin-address (aget destination-addresses 0)
+              destination-address (aget destination-addresses 1)
+              message-el-paragraph        (dom/createDom "p" (clj->js {"class" "message-paragraph"}))
+              route-el-paragraph   (dom/createDom "p" (clj->js {"class" "cloud-p"}))]
 
-          (dom/setTextContent toolbar-element message)
+          (dom/setTextContent message-el-paragraph message)
+          (dom/setTextContent route-el-paragraph (str "Ruta: " origin-address " - " destination-address))
+
+
+          (dom/appendChild toolbar-element message-el-paragraph)
+          (dom/appendChild toolbar-element route-el-paragraph)
           (.setPosition description-overlay end-coord)
-          (style/setStyle toolbar-element #js {:display ""}))
+          (style/setStyle toolbar-element #js {:display "block"}))
         (let [response-obj (clj->js response)
               response     (aget response-obj "response")
               error-message (aget response "error-message")]
@@ -62,6 +70,7 @@
 (defn draw-start-handler [v-source toolbar-element]
   (fn [e]
      (.clear v-source)
+     (dom/removeChildren toolbar-element)
      (style/setStyle toolbar-element #js {"display" "none"})))
 
 (defn draw-end-handler [map v-source description-overlay toolbar-element]

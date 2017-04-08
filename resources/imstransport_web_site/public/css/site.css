@@ -1,3 +1,4 @@
+
 .error-page body {
     background: #eee;
 }
@@ -162,12 +163,20 @@
 .welcome #description-toolbar{
   display: none;
   z-index: 1000;
-  max-width: 300px;
-  min-width: 300px;
-  min-height: 180px;
-  max-height: 180px;
-  background: url("../images/map/cloud.png");
+  max-width: 330px;
+  min-width: 335px;
+  min-height: 190px;
+  max-height: 190px;
+  border-radius: 20px;
   background-repeat: no-repeat;
-  background-color: rgba(255,255,255,0.12);
-  padding: 33px 50px;
+  background-color: rgba(221,221,221,0.85);
+  padding: 25px 25px;
+}
+.cloud-p {
+    font-size: 1em;
+    margin:0.1em;
+}
+.message-paragraph{
+  font-size: 1.1em;
+
 }
