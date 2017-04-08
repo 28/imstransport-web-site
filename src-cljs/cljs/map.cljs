@@ -26,18 +26,27 @@
 (def belgrade-center
    #js [20.4489 44.7866])
 
+
+
 (defn get-price-information [end-coord map v-source description-overlay toolbar-element]
     (fn [[ok response]]
-      (let [response-obj (clj->js response)
-            message (if (aget response-obj "info-message")
-                      (aget response-obj "info-message")
-                      (aget response-obj "error-message"))
-            destination-addresses (aget response-obj "destination-addresses")
-            origin-addresses (aget response-obj "origin-addresses")]
+      (if ok
+        (let [response-obj (clj->js response)
+              message (if (aget response-obj "info-message")
+                        (aget response-obj "info-message")
+                        (aget response-obj "error-message"))
+              destination-addresses (aget response-obj "destination-addresses")
+              origin-addresses (aget response-obj "origin-addresses")]
 
-        (dom/setTextContent toolbar-element message)
-        (.setPosition description-overlay end-coord)
-        (style/setStyle toolbar-element #js {:display ""}))))
+          (dom/setTextContent toolbar-element message)
+          (.setPosition description-overlay end-coord)
+          (style/setStyle toolbar-element #js {:display ""}))
+        (let [response-obj (clj->js response)
+              response     (aget response-obj "response")
+              error-message (aget response "error-message")]
+            (dom/setTextContent toolbar-element error-message)
+            (.setPosition description-overlay end-coord)
+            (style/setStyle toolbar-element #js {:display "block"})))))
 
 
 (defn center-map [map]
@@ -84,11 +93,11 @@
         vectorLayer (ol.layer.Vector. #js {:source vectorSource})
         drawInteraction (ol.interaction.Draw. #js {:source vectorSource
                                                    :type   "LineString"})
-        toolbar-element (dom/getElement "description-toolbar")
-        descriptionOverlay   (ol.Overlay. #js {:element toolbar-element})
-        resetButton    (dom/createDom "button" (clj->js {"class" "ol-control-button" "id" "resetButton" "title" "Centriraj na Beograd"}))
-        controlElement (dom/createDom "div" (clj->js {"class" "reset-position ol-unselectable ol-control"}))
-        zoomControl (ol.control.Zoom. #js {})
+        toolbar-element    (dom/getElement "description-toolbar")
+        descriptionOverlay (ol.Overlay. #js {:element toolbar-element})
+        resetButton        (dom/createDom "button" (clj->js {"class" "ol-control-button" "id" "resetButton" "title" "Centriraj na Beograd"}))
+        controlElement     (dom/createDom "div" (clj->js {"class" "reset-position ol-unselectable ol-control"}))
+        zoomControl        (ol.control.Zoom. #js {})
         map (ol.Map. #js {:layers #js [rasterLayer, vectorLayer]
                           :target "map"
                           :view   view
