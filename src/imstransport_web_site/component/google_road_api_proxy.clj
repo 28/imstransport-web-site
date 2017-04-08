@@ -23,11 +23,11 @@
   (st/join "," (vals c)))
 
 (defn- request-url
-  [base-url api-key origin dest]
+  [base-url api-key starting-point origin dest]
   (let [base (str base-url google-api-format)]
     (url/create-url base {"units" google-api-units
-                          "origins" (format-coordinates origin)
-                          "destinations" (format-coordinates dest)
+                          "origins" (format-coordinates starting-point)
+                          "destinations" (st/join "|" (map format-coordinates [origin dest]))
                           "key" api-key})))
 
 (defn- validate-google-data
@@ -67,13 +67,14 @@
 (defprotocol GoogleRoadApiBind
   (get-distance [this origin destination]))
 
-(defrecord GoogleRoadApiProxy [api-key base-url]
+(defrecord GoogleRoadApiProxy [api-key base-url starting-point]
   GoogleRoadApiBind
   (get-distance [this origin destination]
     (log :info "get-distance" origin destination)
-    (try (let [u (request-url base-url api-key origin destination)
+    (try (let [u (request-url base-url api-key starting-point origin destination)
                json-response (http/get u {:accept :json})
                response (json/parse-string (:body json-response) true)]
+           (log :debug "Tried Google request: " u)
            (log :info "Google response: " response)
            (if (status-ok? response)
              (convert-results response)
@@ -81,4 +82,6 @@
          (catch Exception e (error-response :internal (. e getMessage))))))
 
 (defn google-road-api-proxy [config]
-  (->GoogleRoadApiProxy (:dm-api-key config) (:dm-base-url config)))
+  (->GoogleRoadApiProxy (:dm-api-key config)
+                        (:dm-base-url config)
+                        (:starting-point config)))

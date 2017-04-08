@@ -1,10 +1,18 @@
 (ns imstransport-web-site.util.util
   (:require [clojure.string :as st]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io])
+  (:import (java.net URLEncoder)))
+
+(defn url-encode
+  [e]
+  (URLEncoder/encode e "UTF-8"))
 
 (defn create-url
   [base params]
-  (str base "?" (st/join "&" (map (fn [[k v]] (str k "=" v)) params))))
+  (str base "?"
+       (st/join "&" (map
+                     (fn [[k v]] (str (url-encode k) "=" (url-encode v)))
+                     params))))
 
 (defn load-resource-edn
   [file-name]
@@ -35,12 +43,12 @@
              py*)]
     (cond
       (or
-        (< py ay)
-        (> py by)
-        (> px (max ax bx))) false
-      
+       (< py ay)
+       (> py by)
+       (> px (max ax bx))) false
+
       (< px (min ax bx)) true
-      
+
       :else (let [red (if (not= bx ax) (/ (- by ay) (- bx ax)) Double/MAX_VALUE)
                   blue (if (not= px ax) (/ (- py ay) (- px ax)) Double/MAX_VALUE)]
               (>= blue red)))))
