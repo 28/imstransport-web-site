@@ -19,15 +19,15 @@
                                      :status s/Str})
 
 (defn- format-coordinates
-  [c]
-  (st/join "," (vals c)))
+  [f s]
+  (st/join "|" (map #(st/join "," (vals %)) [f s])))
 
 (defn- request-url
   [base-url api-key starting-point origin dest]
   (let [base (str base-url google-api-format)]
     (url/create-url base {"units" google-api-units
-                          "origins" (format-coordinates starting-point)
-                          "destinations" (st/join "|" (map format-coordinates [origin dest]))
+                          "origins" (format-coordinates starting-point origin)
+                          "destinations" (format-coordinates origin dest)
                           "key" api-key})))
 
 (defn- validate-google-data
@@ -56,13 +56,15 @@
 
 (defn- convert-results
   [google-response]
-  {:success true
-   :destination-addresses (:destination_addresses google-response)
-   :origin-addresses (:origin_addresses google-response)
-   :total-distance (-> google-response :rows first :elements first :distance :text)
-   :total-duration (-> google-response :rows first :elements first :duration :text)
-   :total-distance-m (-> google-response :rows first :elements first :distance :value)
-   :total-duration-s (-> google-response :rows first :elements first :duration :value)})
+  (let [d (fn [r] (get-in r [:distance :value]))
+        t (fn [r] (get-in r [:duration :value]))
+        froute (get-in google-response [:rows 0 :elements 0])
+        sroute (get-in google-response [:rows 1 :elements 1])]
+    {:success true
+     :destination-addresses (:destination_addresses google-response)
+     :origin-addresses (:origin_addresses google-response)
+     :total-distance-m (+ (d froute) (d sroute))
+     :total-duration-s (+ (t froute) (t sroute))}))
 
 (defprotocol GoogleRoadApiBind
   (get-distance [this origin destination]))

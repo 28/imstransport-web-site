@@ -50,7 +50,7 @@
   :google-api
   {:dm-api-key dm-api-key
    :dm-base-url dm-base-url
-   :starting-point {:lat 44.815157 :long 20.412600}}
+   :starting-point {:lat "44.815157" :long "20.412600"}}
   :transport-config
   {:km-factor 24
    :fixed-price-part 2000

@@ -1,3 +1,4 @@
+
 {:components
  {:figwheel #var duct.component.figwheel/server}
  :config
@@ -24,6 +25,6 @@
       :closure-extra-annotations #{"api" "observable"}
       :closure-warnings {:externs-validation :off}}}]}
   :google-api ^:replace
-  {:dm-api-key "AIzaSyBk8yZqyROKuFaJDRnNn8-fdD3dBuxwvhQ"
+  {:dm-api-key "AIzaSyB5A2cZkRx1M2I7AXwZWDREPydKFiW46l0"
    :dm-base-url "https://maps.googleapis.com/maps/api/distancematrix/"
-   :starting-point {:lat 44.815157 :long 20.412600}}}}
+   :starting-point {:lat "44.815157" :long "20.412600"}}}}
