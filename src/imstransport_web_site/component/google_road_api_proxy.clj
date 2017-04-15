@@ -57,14 +57,12 @@
 (defn- convert-results
   [google-response]
   (let [d (fn [r] (get-in r [:distance :value]))
-        t (fn [r] (get-in r [:duration :value]))
         froute (get-in google-response [:rows 0 :elements 0])
         sroute (get-in google-response [:rows 1 :elements 1])]
     {:success true
      :destination-addresses (:destination_addresses google-response)
      :origin-addresses (:origin_addresses google-response)
-     :total-distance-m (+ (d froute) (d sroute))
-     :total-duration-s (+ (t froute) (t sroute))}))
+     :total-distance-m (+ (d froute) (d sroute))}))
 
 (defprotocol GoogleRoadApiBind
   (get-distance [this origin destination]))

@@ -52,8 +52,8 @@
    :dm-base-url dm-base-url
    :starting-point {:lat "44.815157" :long "20.412600"}}
   :transport-config
-  {:km-factor 24
-   :fixed-price-part 2000
+  {:km-factor 25
+   :fixed-price-part 2500
    :bg-fixed-price 2500
    :bg-poly bg-poly
    :serbia-poly serbia-poly}

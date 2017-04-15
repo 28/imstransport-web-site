@@ -9,4 +9,4 @@
                   "b" 2
                   "c" "1|2"
                   "d" "ddd"}]
-      (is (= (create-url base params) "http://localhost?a=1&b=2&c=1|2&d=ddd")))))
+      (is (= (create-url base params) "http://localhost?a=1&b=2&c=1%7C2&d=ddd")))))

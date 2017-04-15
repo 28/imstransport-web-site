@@ -11,25 +11,40 @@
   (binding [*stub-server* (start! {{:method :get
                                     :path "/maps/api/distancematrix/json"
                                     :query-params {:units "metric"
-                                                   :origins "1.1,2.2"
-                                                   :destinations "3.3,4.4"
+                                                   :origins "5.5%2C5.5%7C1.1%2C2.2"
+                                                   :destinations "1.1%2C2.2%7C3.3%2C4.4"
                                                    :key "abc"}}
                                    {:status 200
                                     :content-type "application/json"
                                     :body (json/generate-string
-                                           {:destination_addresses ["A"]
-                                            :origin_addresses ["B"]
+                                           {:destination_addresses ["A" "B"]
+                                            :origin_addresses ["C" "A"]
                                             :rows [{:elements [{:distance {:text "1 km"
                                                                            :value 1000}
                                                                 :duration {:text "15 mins"
                                                                            :value 900}
+                                                                :status "OK"}
+                                                               {:distance {:text "18 km"
+                                                                           :value 18000}
+                                                                :duration {:text "200 mins"
+                                                                           :value 12000}
+                                                                :status "OK"}]}
+                                                   {:elements [{:distance {:text "8 km"
+                                                                           :value 8000}
+                                                                :duration {:text "15 mins"
+                                                                           :value 900}
+                                                                :status "OK"}
+                                                               {:distance {:text "1 km"
+                                                                           :value 1000}
+                                                                :duration {:text "2 mins"
+                                                                           :value 120}
                                                                 :status "OK"}]}]
                                             :status "OK"})}
                                    {:method :get
                                     :path "/maps/api/distancematrix/json"
                                     :query-params {:units "metric"
-                                                   :origins "0,0"
-                                                   :destinations "0,0"
+                                                   :origins "5.5%2C5.5%7C0.0%2C0.0"
+                                                   :destinations "0.0%2C0.0%7C0.0%2C0.0"
                                                    :key "abc"}}
                                    {:status 200
                                     :content-type "application/json"
@@ -48,23 +63,22 @@
 (defn- get-proxy
   []
   (google-road-api-proxy {:dm-api-key "abc"
-                          :dm-base-url (str (:uri *stub-server*) "/maps/api/distancematrix/")}))
+                          :dm-base-url (str (:uri *stub-server*) "/maps/api/distancematrix/")
+                          :starting-point {:lat "5.5" :long "5.5"}}))
 
 (deftest proxy-handles-everything-ok-response
   (let [proxy (get-proxy)
         response (get-distance proxy {:lat 1.1 :long 2.2} {:lat 3.3 :long 4.4})]
     (is (and
-         (= "A" (-> response :destination-addresses first))
-         (= "B" (-> response :origin-addresses first))
-         (= "1 km" (-> response :total-distance))
-         (= "15 mins" (-> response :total-duration))
-         (= 1000 (-> response :total-distance-m))
-         (= 900 (-> response :total-duration-s))))))
+         (:success response)
+         (= ["C" "A"] (:origin-addresses response))
+         (= ["A" "B"] (:destination-addresses response))
+         (= 2000 (:total-distance-m response))))))
 
 (deftest proxy-handles-invalid-request-response
   (let [proxy (get-proxy)
-        response (get-distance proxy {:lat 0 :long 0} {:lat 0 :long 0})]
+        response (get-distance proxy {:lat 0.0 :long 0.0} {:lat 0.0 :long 0.0})]
     (is (and
-         (nil? (-> response :total-distance))
-         (nil? (-> response :total-duration))
-         (-> response :error-message)))))
+         (false? (:success response))
+         (:error-flag response)
+         (:error-message response)))))

@@ -5,7 +5,7 @@
 
 (defn url-encode
   [e]
-  (URLEncoder/encode e "UTF-8"))
+  (URLEncoder/encode (str e) "UTF-8"))
 
 (defn create-url
   [base params]
