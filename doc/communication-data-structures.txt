@@ -5,7 +5,7 @@
 JSON request should conform to this schema:
 
 {:origin {:lat s/Num :long s/Num}
- :dest {:lat s/Num :long s/Num}}
+:dest {:lat s/Num :long s/Num}}
 
 JSON string example:
 
@@ -17,40 +17,31 @@ JSON string example:
 JSON response will conform to this schema:
 
 {:destination-addresses [s/Str]
- :origin-addresses [s/Str]
- :total-distance s/Str
- :total-duration s/Str
- :total-distance-m s/Num
- :total-duration-s s/Num
- :price s/Num
- :info-message s/Str}
+:origin-addresses [s/Str]
+:total-distance-m s/Num
+:price s/Num
+:info-message s/Str}
 
 :destination-addresses - represents a collection of addresses of the destination.
 :origin-addresses - represents a collection of addresses of the origin locations.
-:total-distance - total distance in km as a formated string.
-:total-duration - total travel duration in h as as formated string.
 :total-distance-m - total distance in m.
-:total-duration-s - total duration in s.
 :price - transport price value
 :info-message - Information message that can be displayed on client.
 
 JSON string example:
 
 {"destination-addresses": "San Francisco, CA, USA",
- "origin-addresses": "Vancouver, BC, Canada",
- "total-distance": "1,528 km",
- "total-duration": "14 hours 53 mins",
- "total-distance-m": "1528264",
- "total-duration-s": "53562",
- "price": "10000"
- "info-message" "Your price is 10000"}
+"origin-addresses": "Vancouver, BC, Canada",
+"total-distance-m": "1528264",
+"price": "10000"
+"info-message" "Your price is 10000"}
 
 ## Error response
 
 Error response will conform to this schema:
 
 {:error-flag s/Keyword
- :error-message s/Str}
+:error-message s/Str}
 
 Error flag will be an internal identificator of the error that occured. Error
 message will be the message to display on client.
@@ -58,4 +49,4 @@ message will be the message to display on client.
 JSON string example:
 
 {"error-flag" "internal"
- "error-message" "Internal error occurred!"}
+"error-message" "Internal error occurred!"}

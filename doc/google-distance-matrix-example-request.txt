@@ -1,5 +1,7 @@
 Google Distance matrix example
 
+- Sample one-origin-one-destination request
+
 Origin: 44.816128,20.4186053
 Destination: 44.815041,20.4898558
 
@@ -30,11 +32,80 @@ Response:
    "status" : "OK"
 }
 
-Example error response:
+- Sample error response:
 
 {
    "destination_addresses" : [],
    "origin_addresses" : [],
    "rows" : [],
    "status" : "INVALID_REQUEST"
+}
+
+- Sample one-origin-one-destination with starting point request
+
+Origin: New York, NY, USA
+Destination: Bobcaygeon, Kawartha Lakes, ON, Canada
+Starting point: Washington, DC, USA
+
+Request:
+https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=Washington,DC%7CNew+York+City,NY&destinations=New+York+City,NY%7CBobcaygeon+ON&key=AIzaSyArBc9Q4553O6RBH8A1coEf45hpHMXlFck
+
+{
+   "destination_addresses" : [ "New York, NY, USA", "Bobcaygeon, Kawartha Lakes, ON, Canada" ],
+   "origin_addresses" : [ "Washington, DC, USA", "New York, NY, USA" ],
+   "rows" : [
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "362 km",
+                  "value" : 361721
+               },
+               "duration" : {
+                  "text" : "3 hours 48 mins",
+                  "value" : 13650
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "935 km",
+                  "value" : 934795
+               },
+               "duration" : {
+                  "text" : "10 hours 5 mins",
+                  "value" : 36274
+               },
+               "status" : "OK"
+            }
+         ]
+      },
+      {
+         "elements" : [
+            {
+               "distance" : {
+                  "text" : "1 m",
+                  "value" : 0
+               },
+               "duration" : {
+                  "text" : "1 min",
+                  "value" : 0
+               },
+               "status" : "OK"
+            },
+            {
+               "distance" : {
+                  "text" : "838 km",
+                  "value" : 838477
+               },
+               "duration" : {
+                  "text" : "8 hours 27 mins",
+                  "value" : 30404
+               },
+               "status" : "OK"
+            }
+         ]
+      }
+   ],
+   "status" : "OK"
 }
