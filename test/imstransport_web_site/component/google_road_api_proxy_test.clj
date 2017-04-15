@@ -13,7 +13,8 @@
                                     :query-params {:units "metric"
                                                    :origins "5.5%2C5.5%7C1.1%2C2.2"
                                                    :destinations "1.1%2C2.2%7C3.3%2C4.4"
-                                                   :key "abc"}}
+                                                   :key "abc"
+                                                   :language "sr"}}
                                    {:status 200
                                     :content-type "application/json"
                                     :body (json/generate-string
@@ -45,7 +46,8 @@
                                     :query-params {:units "metric"
                                                    :origins "5.5%2C5.5%7C0.0%2C0.0"
                                                    :destinations "0.0%2C0.0%7C0.0%2C0.0"
-                                                   :key "abc"}}
+                                                   :key "abc"
+                                                   :language "sr"}}
                                    {:status 200
                                     :content-type "application/json"
                                     :body (json/generate-string

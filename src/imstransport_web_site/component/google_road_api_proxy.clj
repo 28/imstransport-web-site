@@ -28,7 +28,8 @@
     (url/create-url base {"units" google-api-units
                           "origins" (format-coordinates starting-point origin)
                           "destinations" (format-coordinates origin dest)
-                          "key" api-key})))
+                          "key" api-key
+                          "language" "sr"})))
 
 (defn- validate-google-data
   [data]
