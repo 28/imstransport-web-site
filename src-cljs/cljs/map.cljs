@@ -24,38 +24,42 @@
 (enable-console-print!)
 
 (def belgrade-center
-   #js [20.4489 44.7866])
+  #js [20.4489 44.7866])
 
+(defn set-end-message
+  [msg od-msg tbe do ec]
+  (let [message-el-paragraph (dom/createDom "p" (clj->js {"class" "message-paragraph"}))
+        route-el-paragraph (dom/createDom "p" (clj->js {"class" "cloud-p"}))]
+    (dom/setTextContent message-el-paragraph msg)
+    (dom/setTextContent route-el-paragraph od-msg)
+    (dom/appendChild tbe message-el-paragraph)
+    (dom/appendChild tbe route-el-paragraph)
+    (.setPosition do ec)
+    (style/setStyle tbe #js {:display "block"})))
 
-
-(defn get-price-information [end-coord map v-source description-overlay toolbar-element]
-    (fn [[ok response]]
+(defn get-price-information
+  [end-coord map v-source description-overlay toolbar-element]
+  (fn [[ok response]]
+    (let [r (clj->js response)
+          msg (if (aget r "info-message")
+                (aget r "info-message")
+                (aget r "error-message"))
+          partial-set-end-message #(set-end-message
+                                    msg
+                                    %
+                                    toolbar-element
+                                    description-overlay
+                                    end-coord)]
       (if ok
-        (let [response-obj (clj->js response)
-              message (if (aget response-obj "info-message")
-                        (aget response-obj "info-message")
-                        (aget response-obj "error-message"))
-              destination-addresses (aget response-obj "destination-addresses")
-              origin-address (aget destination-addresses 0)
-              destination-address (aget destination-addresses 1)
-              message-el-paragraph        (dom/createDom "p" (clj->js {"class" "message-paragraph"}))
-              route-el-paragraph   (dom/createDom "p" (clj->js {"class" "cloud-p"}))]
-
-          (dom/setTextContent message-el-paragraph message)
-          (dom/setTextContent route-el-paragraph (str "Ruta: " origin-address " - " destination-address))
-
-
-          (dom/appendChild toolbar-element message-el-paragraph)
-          (dom/appendChild toolbar-element route-el-paragraph)
+        (if-let [da (aget r "destination-addresses")]
+          (partial-set-end-message (str "Ruta: " (aget da 0) " - " (aget da 1)))
+          (partial-set-end-message nil))
+        (let [e (-> r
+                    (aget "response")
+                    (aget "error-message"))]
+          (dom/setTextContent toolbar-element e)
           (.setPosition description-overlay end-coord)
-          (style/setStyle toolbar-element #js {:display "block"}))
-        (let [response-obj (clj->js response)
-              response     (aget response-obj "response")
-              error-message (aget response "error-message")]
-            (dom/setTextContent toolbar-element error-message)
-            (.setPosition description-overlay end-coord)
-            (style/setStyle toolbar-element #js {:display "block"})))))
-
+          (style/setStyle toolbar-element #js {:display "block"}))))))
 
 (defn center-map [map]
   (fn [e]
@@ -69,9 +73,9 @@
 
 (defn draw-start-handler [v-source toolbar-element]
   (fn [e]
-     (.clear v-source)
-     (dom/removeChildren toolbar-element)
-     (style/setStyle toolbar-element #js {"display" "none"})))
+    (.clear v-source)
+    (dom/removeChildren toolbar-element)
+    (style/setStyle toolbar-element #js {"display" "none"})))
 
 (defn draw-end-handler [map v-source description-overlay toolbar-element]
   (fn [e]
@@ -87,7 +91,6 @@
                :format          (json-request-format)
                :keywords?       true}]
       (ajax-request req))))
-
 
 (defn create-transport-map []
   (let [rasterSource (ol.source.OSM. #js {:layer "sat"})
