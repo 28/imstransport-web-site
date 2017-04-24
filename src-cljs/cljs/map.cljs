@@ -19,7 +19,8 @@
             [goog.events :as events]
             [goog.style :as style]
             [ajax.core :refer [json-response-format json-request-format ajax-request]]
-            [cljs.reader :as reader]))
+            [cljs.reader :as reader]
+            [keybind.core :as key]))
 
 (enable-console-print!)
 
@@ -71,11 +72,15 @@
       (.beforeRender map bounce)
       (.setZoom view 11))))
 
+(defn clear
+  [v-source toolbar-element]
+  (.clear v-source)
+  (dom/removeChildren toolbar-element)
+  (style/setStyle toolbar-element #js {"display" "none"}))
+
 (defn draw-start-handler [v-source toolbar-element]
   (fn [e]
-    (.clear v-source)
-    (dom/removeChildren toolbar-element)
-    (style/setStyle toolbar-element #js {"display" "none"})))
+    (clear v-source toolbar-element)))
 
 (defn draw-end-handler [map v-source description-overlay toolbar-element]
   (fn [e]
@@ -123,7 +128,8 @@
     (.addOverlay map descriptionOverlay)
     (events/listen resetButton "click" (center-map map))
     (.on drawInteraction "drawend" (draw-end-handler map vectorSource descriptionOverlay toolbar-element))
-    (.on drawInteraction "drawstart" (draw-start-handler  vectorSource toolbar-element))))
+    (.on drawInteraction "drawstart" (draw-start-handler  vectorSource toolbar-element))
+    (key/bind! "esc" ::clear-drawing #(clear vectorSource toolbar-element))))
 
 (set! (.-onload js/window)
       (fn []
