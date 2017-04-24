@@ -1,7 +1,8 @@
 .
 ├── dev
 │   ├── resources
-│   │   └── dev.edn
+│   │   ├── dev.edn
+│   │   └── testmsg.properties
 │   └── src
 │       ├── cljs
 │       │   └── user.cljs
@@ -13,9 +14,20 @@
 │   ├── figwheel-setup.txt
 │   ├── get_price_info_sequence_diagram.txt
 │   ├── google-distance-matrix-example-request.txt
+│   ├── polygon_coordinates.txt
 │   ├── project-layout.txt
 │   ├── todo.txt
 │   └── web_site_layout.txt
+├── logs
+│   ├── ims.log
+│   ├── ims.log.20170330
+│   ├── ims.log.20170403
+│   ├── ims.log.20170404
+│   ├── ims.log.20170407
+│   ├── ims.log.20170414
+│   ├── ims.log.20170419
+│   └── ims.log.20170423
+├── Procfile
 ├── project.clj
 ├── README.md
 ├── resources
@@ -24,6 +36,8 @@
 │       │   ├── 404.html
 │       │   └── 500.html
 │       ├── google.edn
+│       ├── messages.properties
+│       ├── polygon.edn
 │       ├── public
 │       │   ├── css
 │       │   │   └── site.css
@@ -31,33 +45,39 @@
 │       │   ├── images
 │       │   │   ├── info
 │       │   │   │   └── info.png
+│       │   │   ├── map
+│       │   │   │   └── cloud.png
 │       │   │   └── nav
-│       │   │       └── IMSLOGO120px_width.png
+│       │   │       ├── IMSLOGO120px_width.png
+│       │   │       └── logo.png
 │       │   ├── index.html
 │       │   └── robots.txt
 │       └── system.edn
 ├── src
 │   └── imstransport_web_site
 │       ├── component
-│       │   └── google_road_api_proxy.clj
+│       │   ├── google_road_api_proxy.clj
+│       │   ├── logger_component.clj
+│       │   └── message_repository.clj
 │       ├── endpoint
 │       │   └── transport_price.clj
 │       ├── main.clj
 │       └── util
-│           └── url.clj
+│           └── util.clj
 ├── src-cljs
 │   └── cljs
 │       └── map.cljs
 ├── test
 │   └── imstransport_web_site
 │       ├── component
-│       │   └── google_road_api_proxy_test.clj
+│       │   ├── google_road_api_proxy_test.clj
+│       │   └── message_repository_test.clj
 │       ├── endpoint
 │       │   └── transport_price_test.clj
 │       └── util
-│           └── url_test.clj
+│           └── util_test.clj
 └── tools
     ├── build.sh
     └── update-project-tree.sh
 
-26 directories, 34 files
+28 directories, 52 files
