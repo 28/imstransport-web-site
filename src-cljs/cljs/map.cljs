@@ -62,21 +62,23 @@
           (.setPosition description-overlay end-coord)
           (style/setStyle toolbar-element #js {:display "block"}))))))
 
-(defn center-map [map]
-  (fn [e]
-    (let [view (.getView map)
-          pan (a/pan #js {:source (.getCenter view)})
-          bounce (a/bounce #js {:resolution (.getResolution view)})]
-      (.beforeRender map pan)
-      (.setCenter view belgrade-center)
-      (.beforeRender map bounce)
-      (.setZoom view 11))))
-
 (defn clear
   [v-source toolbar-element]
   (.clear v-source)
   (dom/removeChildren toolbar-element)
   (style/setStyle toolbar-element #js {"display" "none"}))
+
+(defn center-and-clear
+  [map v-source toolbar-element]
+  (fn [e]
+    (let [view (.getView map)
+          pan (a/pan #js {:source (.getCenter view)})
+          bounce (a/bounce #js {:resolution (.getResolution view)})]
+      (clear v-source toolbar-element)
+      (.beforeRender map pan)
+      (.setCenter view belgrade-center)
+      (.beforeRender map bounce)
+      (.setZoom view 11))))
 
 (defn draw-start-handler [v-source toolbar-element]
   (fn [e]
@@ -126,10 +128,12 @@
     (.addControl map (ol.control.Control. #js {:element controlElement}))
     (.addInteraction map drawInteraction)
     (.addOverlay map descriptionOverlay)
-    (events/listen resetButton "click" (center-map map))
+    (events/listen resetButton "click" (center-and-clear map vectorSource toolbar-element))
     (.on drawInteraction "drawend" (draw-end-handler map vectorSource descriptionOverlay toolbar-element))
     (.on drawInteraction "drawstart" (draw-start-handler  vectorSource toolbar-element))
-    (key/bind! "esc" ::clear-drawing #(clear vectorSource toolbar-element))))
+    (key/bind! "esc" ::clear-drawing (fn []
+                                       (clear vectorSource toolbar-element)
+                                       (. drawInteraction removeLastPoint)))))
 
 (set! (.-onload js/window)
       (fn []
