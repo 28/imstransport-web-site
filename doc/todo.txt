@@ -1,19 +1,25 @@
 *Web release milestone*
-- [x]Outside Serbia criteria
-- [X]In Belgrade criteria
-- UX
+
+- [x] Outside Serbia criteria
+- [X] In Belgrade criteria
+- [] UX
+     * [] Correct wording
+     * [] Transport van picture
+     * [] Remove last point on right click
+     * [] Map usage info
+     * [] Limit drawing for to only two point - origin and dest
 - [x] Logging
-- [x/2]Show price results on map
-- [x] Internationalization or just Serbian
+- [x] Show price results on map
+- [x] Serbian language on whole site
 - [x] Proper error handling and reporting
 - [x] Deploy on Heroku
-- Add home coords as starting argument to Google
-- Register Web domain
-- Acquire hosting
+- [x] Add home coords as starting argument to Google
+- [] Register Web domain
+- [] Acquire hosting
 ------------------------------
 *Future milestones - real hard core*
 
 - Snap to road feature
 - Implement DB to store out own geo data
 - Map-centric UX
-- Switch to react?
+- Switch to react
