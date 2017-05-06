@@ -1,4 +1,3 @@
-
 .error-page body {
     background: #eee;
 }
@@ -125,10 +124,12 @@
 .welcome .bord {
     position: relative;
 }
+
 .welcome .bord:before, .bord:after {
     content: "";
     position: absolute;
 }
+
 .welcome .bord:before {
     top: -3px;
     left: -3px;
@@ -156,28 +157,47 @@
     font-size: small;
 }
 
+.welcome #footer-firm {
+    float: left;
+    text-align: left;
+}
+
+.welcome #footer-creator {
+    float: right;
+    text-align: center;
+}
+
 .welcome .reset-position {
     top: 4em;
     left: .5em;
 }
 
 .welcome #description-toolbar{
-  display: none;
-  z-index: 1000;
-  max-width: 330px;
-  min-width: 335px;
-  min-height: 190px;
-  max-height: 190px;
-  border-radius: 20px;
-  background-repeat: no-repeat;
-  background-color: rgba(221,221,221,0.85);
-  padding: 25px 25px;
+    display: none;
+    z-index: 1000;
+    max-width: 330px;
+    min-width: 335px;
+    min-height: 190px;
+    max-height: 190px;
+    border-radius: 20px;
+    background-repeat: no-repeat;
+    background-color: rgba(221,221,221,0.85);
+    padding: 25px 25px;
 }
-.cloud-p {
+
+.welcome .cloud-p {
     font-size: 1em;
     margin:0.1em;
 }
-.message-paragraph{
-  font-size: 1.1em;
 
+.welcome .message-paragraph{
+    font-size: 1.1em;
+}
+
+.welcome #img-bord {
+    padding: 10px;
+    background-color: rgba(221,221,221,0.85);
+    width: 520px;
+    margin-left: auto;
+    margin-right: auto;
 }
