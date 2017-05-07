@@ -4,10 +4,11 @@
 - [X] In Belgrade criteria
 - [] UX
      * [] Correct wording
-     * [] Transport van picture
+     * [x] Transport van picture
      * [] Remove last point on right click
      * [] Map usage info
      * [] Limit drawing for to only two point - origin and dest
+     * [] Adjust font size (and anything else needed for mobile)
 - [x] Logging
 - [x] Show price results on map
 - [x] Serbian language on whole site
