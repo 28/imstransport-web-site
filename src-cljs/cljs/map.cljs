@@ -80,6 +80,14 @@
       (.beforeRender map bounce)
       (.setZoom view 11))))
 
+(defn clear-last
+  [vectorSource toolbar-element drawInteraction]
+  (try
+    (do
+      (clear vectorSource toolbar-element)
+      (. drawInteraction removeLastPoint))
+    (catch :default _)))
+
 (defn display-map-info
   []
   (let [e (dom/getElement "map-info-div")
@@ -87,6 +95,13 @@
     (if (= "none" d)
       (style/setStyle e #js {:display "block"})
       (style/setStyle e #js {:display "none"}))))
+
+(defn bind-right-click
+  [v t d]
+  (letfn [(menu-listener [event]
+            (.preventDefault event)
+            (clear-last v t d))]
+    (events/listen (dom/getElement "map") "contextmenu" menu-listener)))
 
 (defn draw-start-handler [v-source toolbar-element]
   (fn [e]
@@ -143,11 +158,8 @@
     (.on drawInteraction "drawend" (draw-end-handler map vectorSource descriptionOverlay toolbar-element))
     (.on drawInteraction "drawstart" (draw-start-handler  vectorSource toolbar-element))
     (key/bind! "esc" ::clear-drawing (fn []
-                                       (try
-                                         (do
-                                           (clear vectorSource toolbar-element)
-                                           (. drawInteraction removeLastPoint))
-                                         (catch :default _))))))
+                                       (clear-last vectorSource toolbar-element drawInteraction)))
+    (bind-right-click vectorSource toolbar-element drawInteraction)))
 
 (set! (.-onload js/window)
       (fn []
