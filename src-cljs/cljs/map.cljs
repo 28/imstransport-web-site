@@ -80,6 +80,14 @@
       (.beforeRender map bounce)
       (.setZoom view 11))))
 
+(defn display-map-info
+  []
+  (let [e (dom/getElement "map-info-div")
+        d (style/getStyle e "display")]
+    (if (= "none" d)
+      (style/setStyle e #js {:display "block"})
+      (style/setStyle e #js {:display "none"}))))
+
 (defn draw-start-handler [v-source toolbar-element]
   (fn [e]
     (clear v-source toolbar-element)))
@@ -115,6 +123,7 @@
         toolbar-element    (dom/getElement "description-toolbar")
         descriptionOverlay (ol.Overlay. #js {:element toolbar-element})
         resetButton        (dom/createDom "button" (clj->js {"class" "ol-control-button" "id" "resetButton" "title" "Centriraj na Beograd"}))
+        infoButton        (dom/createDom "button" (clj->js {"class" "ol-control-button" "id" "infoButton" "title" "Informacije o mapi"}))
         controlElement     (dom/createDom "div" (clj->js {"class" "reset-position ol-unselectable ol-control"}))
         zoomControl        (ol.control.Zoom. #js {})
         map (ol.Map. #js {:layers #js [rasterLayer, vectorLayer]
@@ -122,18 +131,23 @@
                           :view   view
                           :controls #js []})]
     (dom/setTextContent resetButton "R")
+    (dom/setTextContent infoButton "I")
     (dom/appendChild controlElement resetButton)
-
+    (dom/appendChild controlElement infoButton)
     (.addControl map zoomControl)
     (.addControl map (ol.control.Control. #js {:element controlElement}))
     (.addInteraction map drawInteraction)
     (.addOverlay map descriptionOverlay)
     (events/listen resetButton "click" (center-and-clear map vectorSource toolbar-element))
+    (events/listen infoButton "click" (fn [e] (display-map-info)))
     (.on drawInteraction "drawend" (draw-end-handler map vectorSource descriptionOverlay toolbar-element))
     (.on drawInteraction "drawstart" (draw-start-handler  vectorSource toolbar-element))
     (key/bind! "esc" ::clear-drawing (fn []
-                                       (clear vectorSource toolbar-element)
-                                       (. drawInteraction removeLastPoint)))))
+                                       (try
+                                         (do
+                                           (clear vectorSource toolbar-element)
+                                           (. drawInteraction removeLastPoint))
+                                         (catch :default _))))))
 
 (set! (.-onload js/window)
       (fn []

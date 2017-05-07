@@ -189,6 +189,10 @@
     padding: 25px 25px;
 }
 
+.welcome #map-info-div {
+    display: none;
+}
+
 .welcome .cloud-p {
     font-size: 1em;
     margin:0.1em;
