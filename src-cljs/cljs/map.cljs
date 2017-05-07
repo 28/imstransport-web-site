@@ -100,8 +100,13 @@
   [v t d]
   (letfn [(menu-listener [event]
             (.preventDefault event)
-            (clear-last v t d))]
-    (events/listen (dom/getElement "map") "contextmenu" menu-listener)))
+            (clear-last v t d))
+          (click-listener [event]
+            (when (= 2 (.-button event))
+              (.preventDefault event)
+              (clear-last v t d)))]
+    (events/listen (dom/getElement "map") "contextmenu" menu-listener)
+    (events/listen (dom/getElement "map") "click" click-listener)))
 
 (defn draw-start-handler [v-source toolbar-element]
   (fn [e]
