@@ -18,15 +18,6 @@
 │   ├── project-layout.txt
 │   ├── todo.txt
 │   └── web_site_layout.txt
-├── logs
-│   ├── ims.log
-│   ├── ims.log.20170330
-│   ├── ims.log.20170403
-│   ├── ims.log.20170404
-│   ├── ims.log.20170407
-│   ├── ims.log.20170414
-│   ├── ims.log.20170419
-│   └── ims.log.20170423
 ├── Procfile
 ├── project.clj
 ├── README.md
@@ -44,11 +35,12 @@
 │       │   ├── favicon.ico
 │       │   ├── images
 │       │   │   ├── info
-│       │   │   │   └── info.png
+│       │   │   │   ├── info.png
+│       │   │   │   └── van.png
 │       │   │   ├── map
-│       │   │   │   └── cloud.png
+│       │   │   │   └── m.png
 │       │   │   └── nav
-│       │   │       ├── IMSLOGO120px_width.png
+│       │   │       ├── logo_new.png
 │       │   │       └── logo.png
 │       │   ├── index.html
 │       │   └── robots.txt
@@ -80,4 +72,4 @@
     ├── build.sh
     └── update-project-tree.sh
 
-28 directories, 52 files
+27 directories, 45 files

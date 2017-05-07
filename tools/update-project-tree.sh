@@ -1,3 +1,3 @@
 #!/bin/bash
 
-tree -I 'target*' > doc/project-layout.txt
+tree -I 'target*|logs' > doc/project-layout.txt
