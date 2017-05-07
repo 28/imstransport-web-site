@@ -18,6 +18,7 @@
             [goog.dom :as dom]
             [goog.events :as events]
             [goog.style :as style]
+            [goog.object :as gobj]
             [ajax.core :refer [json-response-format json-request-format ajax-request]]
             [cljs.reader :as reader]
             [keybind.core :as key]))
@@ -96,13 +97,21 @@
       (style/setStyle e #js {:display "block"})
       (style/setStyle e #js {:display "none"}))))
 
+(defn debug-js-keys
+  [obj]
+  (let [keys (array)]
+    (gobj/forEach obj (fn [val key obj] (.push keys (str key " - " val))))
+    keys))
+
 (defn bind-right-click
   [v t d]
   (letfn [(menu-listener [event]
+            (.log js/console (str (debug-js-keys event)))
             (.preventDefault event)
             (clear-last v t d))
           (click-listener [event]
             (when (= 2 (.-button event))
+              (.log js/console (str (debug-js-keys event)))
               (.preventDefault event)
               (clear-last v t d)))]
     (events/listen (dom/getElement "map") "contextmenu" menu-listener)
