@@ -104,14 +104,18 @@
     color: black;
 }
 
+#about-link, #map-link {
+    margin-top: 8px;
+}
+
 .welcome .intro {
     text-align: center;
-    font-size: 120%;
+    font-size: 130%;
 }
 
 .welcome .map-section-info {
     text-align: center;
-    font-size: 120%;
+    font-size: 130%;
     margin: 10px;
 }
 
@@ -200,4 +204,9 @@
     width: 520px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.welcome #logo-img {
+    width: auto;
+    height: 70px;
 }
