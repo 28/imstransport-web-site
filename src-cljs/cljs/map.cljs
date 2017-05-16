@@ -87,7 +87,7 @@
     (do
       (clear vectorSource toolbar-element)
       (. drawInteraction removeLastPoint))
-    (catch :default _)))
+    (catch :default e (.log js/console (str e)))))
 
 (defn display-map-info
   []
