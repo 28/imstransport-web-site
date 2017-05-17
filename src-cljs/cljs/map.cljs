@@ -87,7 +87,7 @@
     (do
       (clear vectorSource toolbar-element)
       (. drawInteraction removeLastPoint))
-    (catch :default e (.log js/console (str e)))))
+    (catch :default _)))
 
 (defn display-map-info
   []
@@ -106,12 +106,10 @@
 (defn bind-right-click
   [v t d]
   (letfn [(menu-listener [event]
-            (.log js/console (str (debug-js-keys event)))
             (.preventDefault event)
             (clear-last v t d))
           (click-listener [event]
             (when (= 3 (.-button event))
-              (.log js/console (str (debug-js-keys event)))
               (.preventDefault event)
               (clear-last v t d)))]
     (events/listen (dom/getElement "map") "contextmenu" menu-listener)
