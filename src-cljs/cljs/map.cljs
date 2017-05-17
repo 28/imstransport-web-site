@@ -143,10 +143,11 @@
         drawInteraction (ol.interaction.Draw. #js {:source vectorSource
                                                    :type   "LineString"
                                                    :maxPoints 2
-                                                   :condition (fn [e] (when (= 1 (-> e
-                                                                                    (. -originalEvent)
-                                                                                    (. -which)))
-                                                                       true))})
+                                                   ;:condition
+                                                  #_(fn [e] (when (= 1 (-> e
+                                                                         (. -originalEvent)
+                                                                         (. -which)))
+                                                            true))})
         toolbar-element    (dom/getElement "description-toolbar")
         descriptionOverlay (ol.Overlay. #js {:element toolbar-element})
         resetButton        (dom/createDom "button" (clj->js {"class" "ol-control-button" "id" "resetButton" "title" "Centriraj na Beograd"}))
