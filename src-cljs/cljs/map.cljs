@@ -110,7 +110,7 @@
             (.preventDefault event)
             (clear-last v t d))
           (click-listener [event]
-            (when (= 2 (.-button event))
+            (when (= 3 (.-button event))
               (.log js/console (str (debug-js-keys event)))
               (.preventDefault event)
               (clear-last v t d)))]
@@ -148,7 +148,11 @@
         vectorSource  (ol.source.Vector.)
         vectorLayer (ol.layer.Vector. #js {:source vectorSource})
         drawInteraction (ol.interaction.Draw. #js {:source vectorSource
-                                                   :type   "LineString"})
+                                                   :type   "LineString"
+                                                   :condition (fn [e] (when (= 1 (-> e
+                                                                                    (. -originalEvent)
+                                                                                    (. -which)))
+                                                                       true))})
         toolbar-element    (dom/getElement "description-toolbar")
         descriptionOverlay (ol.Overlay. #js {:element toolbar-element})
         resetButton        (dom/createDom "button" (clj->js {"class" "ol-control-button" "id" "resetButton" "title" "Centriraj na Beograd"}))
