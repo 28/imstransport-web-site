@@ -147,6 +147,7 @@
         vectorLayer (ol.layer.Vector. #js {:source vectorSource})
         drawInteraction (ol.interaction.Draw. #js {:source vectorSource
                                                    :type   "LineString"
+                                                   :maxPoints 2
                                                    :condition (fn [e] (when (= 1 (-> e
                                                                                     (. -originalEvent)
                                                                                     (. -which)))

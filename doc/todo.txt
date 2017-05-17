@@ -7,7 +7,7 @@
      * [x] Transport van picture
      * [x] Remove last point on right click
      * [x] Map usage info
-     * [] Limit drawing for to only two point - origin and dest
+     * [x] Limit drawing for to only two point - origin and dest
      * [] Adjust font size (and anything else needed) for mobile
 - [x] Logging
 - [x] Show price results on map
