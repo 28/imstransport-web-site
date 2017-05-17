@@ -161,21 +161,25 @@
     background-color: #FFFFFF;
     padding-top: 15px;
     font-size: small;
+    clear:both;
 }
 
 .welcome #footer-firm {
     float: left;
     text-align: left;
+    clear:both;
 }
 
 .welcome #footer-creator {
     float: right;
     text-align: center;
+   
 }
 
 .welcome .reset-position {
     top: 4em;
     left: .5em;
+    margin-top:19px;
 }
 
 .welcome #description-toolbar {
@@ -191,9 +195,12 @@
     padding: 25px 25px;
 }
 
+
 .welcome #map-info-div {
     display: none;
 }
+
+
 
 .welcome .cloud-p {
     font-size: 1em;
@@ -214,7 +221,8 @@
 
 .welcome #logo-img {
     width: auto;
-    height: 70px;
+    height: 70px; 
+    margin-top:10px;
 }
 
 @media (min-width: 858px) {
