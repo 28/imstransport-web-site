@@ -22,6 +22,7 @@
     font-family: Helvetica, Arial, sans-serif;
     padding: 15px;
     margin: auto;
+    font-size:20px;
 }
 
 .welcome p {
@@ -105,7 +106,8 @@
 }
 
 #about-link, #map-link {
-    margin-top: 8px;
+    font-size: 25px;
+    margin-top: 6px;
 }
 
 .welcome .intro {
@@ -176,7 +178,7 @@
     left: .5em;
 }
 
-.welcome #description-toolbar{
+.welcome #description-toolbar {
     display: none;
     z-index: 1000;
     max-width: 330px;
@@ -198,7 +200,7 @@
     margin:0.1em;
 }
 
-.welcome .message-paragraph{
+.welcome .message-paragraph {
     font-size: 1.1em;
 }
 
@@ -216,31 +218,31 @@
 }
 
 @media (min-width: 858px) {
-    html {
-        font-size: 12px;
+    body {
+        font-size: 22px;
     }
 }
 
 @media (min-width: 780px) {
-    html {
-        font-size: 11px;
+    body {
+        font-size: 18px;
     }
 }
 
 @media (min-width: 702px) {
-    html {
-        font-size: 10px;
+    body {
+        font-size: 17px;
     }
 }
 
 @media (min-width: 724px) {
-    html {
-        font-size: 9px;
+    body {
+        font-size: 15px;
     }
 }
 
 @media (max-width: 623px) {
-    html {
-        font-size: 8px;
+    body {
+        font-size: 14px;
     }
 }
