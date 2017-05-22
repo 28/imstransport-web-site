@@ -53,7 +53,7 @@
    :starting-point {:lat "44.815157" :long "20.412600"}}
   :transport-config
   {:km-factor 30
-   :fixed-price-part 2500
+   :fixed-price-part 3000
    :bg-fixed-price 3000
    :bg-poly bg-poly
    :serbia-poly serbia-poly}
