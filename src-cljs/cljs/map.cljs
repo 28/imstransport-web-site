@@ -150,16 +150,17 @@
                                                                        false))})
         toolbar-element    (dom/getElement "description-toolbar")
         descriptionOverlay (ol.Overlay. #js {:element toolbar-element})
-        resetButton        (dom/createDom "button" (clj->js {"class" "ol-control-button" "id" "resetButton" "title" "Centriraj na Beograd"}))
-        infoButton        (dom/createDom "button" (clj->js {"class" "ol-control-button" "id" "infoButton" "title" "Informacije o mapi"}))
+        resetButton        (dom/createDom "button" (clj->js {"class" "ol-control-button" "id" "resetButton" "title" "Centriraj mapu na Beograd"}))
+        infoButton        (dom/createDom "button" (clj->js {"class" "ol-control-button" "id" "infoButton" "title" "Prikaži/sakrij uputstvo za korišćenje mape"}))
         controlElement     (dom/createDom "div" (clj->js {"class" "reset-position ol-unselectable ol-control"}))
-        zoomControl        (ol.control.Zoom. #js {})
+        zoomControl        (ol.control.Zoom. #js {:zoomInTipLabel "Zumiraj"
+                                                  :zoomOutTipLabel "Odzumiraj"})
         map (ol.Map. #js {:layers #js [rasterLayer, vectorLayer]
                           :target "map"
                           :view   view
                           :controls #js []})]
-    (dom/setTextContent resetButton "R")
-    (dom/setTextContent infoButton "I")
+    (dom/setTextContent resetButton "bg")
+    (dom/setTextContent infoButton "inf")
     (dom/appendChild controlElement resetButton)
     (dom/appendChild controlElement infoButton)
     (.addControl map zoomControl)

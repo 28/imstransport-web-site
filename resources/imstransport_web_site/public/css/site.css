@@ -105,7 +105,7 @@
     color: black;
 }
 
-#about-link, #map-link {
+.welcome #about-link, #prices-link, #map-link {
     font-size: 25px;
     margin-top: 6px;
 }
@@ -113,6 +113,15 @@
 .welcome .intro {
     text-align: center;
     font-size: 130%;
+}
+
+.welcome #prices-div {
+    font-size: 130%;
+    margin: 3em;
+}
+
+.welcome #prices-div p {
+    text-align: center;
 }
 
 .welcome .map-section-info {
@@ -173,7 +182,7 @@
 .welcome #footer-creator {
     float: right;
     text-align: center;
-   
+    
 }
 
 .welcome .reset-position {
@@ -185,22 +194,19 @@
 .welcome #description-toolbar {
     display: none;
     z-index: 1000;
-    max-width: 330px;
+    max-width: 350px;
     min-width: 335px;
     min-height: 190px;
-    max-height: 190px;
+    max-height: 240px;
     border-radius: 20px;
     background-repeat: no-repeat;
     background-color: rgba(221,221,221,0.85);
     padding: 25px 25px;
 }
 
-
 .welcome #map-info-div {
     display: none;
 }
-
-
 
 .welcome .cloud-p {
     font-size: 1em;
