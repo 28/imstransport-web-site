@@ -27,9 +27,12 @@
                  [clojurewerkz/propertied "1.2.0"]
                  [keybind "2.0.0"]]
   :plugins [[lein-environ "1.0.3"]
-            [lein-cljsbuild "1.1.2"]]
+            [lein-cljsbuild "1.1.2"]
+            [lein-ring "0.12.0"]]
   :main ^:skip-aot imstransport-web-site.main
   :uberjar-name "ims-standalone.jar"
+  :ring {:handler duct.component.handler/handler-component
+         :uberwar-name "ims.war"}
   :target-path "target/%s/"
   :resource-paths ["resources" "target/cljsbuild"]
   :prep-tasks [["javac"] ["cljsbuild" "once"] ["compile"]]
