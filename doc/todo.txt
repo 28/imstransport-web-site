@@ -2,8 +2,8 @@
 
 - [x] Outside Serbia criteria
 - [X] In Belgrade criteria
-- [] UX
-     * [] Correct wording
+- [x] UX
+     * [x] Correct wording
      * [x] Transport van picture
      * [x] Remove last point on right click
      * [x] Map usage info
@@ -15,9 +15,10 @@
 - [x] Proper error handling and reporting
 - [x] Deploy on Heroku
 - [x] Add home coords as starting argument to Google
-- [] Register Web domain
+- [x] Register Web domain
 - [] Acquire hosting
 - [] Acquire certificate
+- [] SEO
 ------------------------------
 *Future milestones - real hard core*
 
