@@ -18,7 +18,7 @@
 - [x] Register Web domain
 - [] Acquire hosting
 - [] Acquire certificate
-- [] SEO
+- [x] SEO
 ------------------------------
 *Future milestones - real hard core*
 
