@@ -10,7 +10,7 @@
      {:level (:global-level config)
       :appenders {:rolling (appender/rolling-appender {:path (:filename config)
                                                        :pattern (:rolling-pattern config)})
-                  :println {:enabled? false}}})
+                  :println (timbre/println-appender {:stream :auto})}})
     (timbre/debug "Logger service started!")
     this)
   (stop [this]
