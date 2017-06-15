@@ -16,12 +16,12 @@
 - [x] Deploy on Heroku
 - [x] Add home coords as starting argument to Google
 - [x] Register Web domain
-- [] Acquire hosting
-- [] Acquire certificate
+- [x] Acquire hosting
 - [x] SEO
 ------------------------------
 *Future milestones - real hard core*
 
+- Acquire certificate
 - Snap to road feature
 - Implement DB to store out own geo data
 - Map-centric UX
