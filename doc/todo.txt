@@ -1,4 +1,4 @@
-*Web release milestone*
+*Web release milestone - v0.1.0*
 
 - [x] Outside Serbia criteria
 - [X] In Belgrade criteria
@@ -18,6 +18,14 @@
 - [x] Register Web domain
 - [x] Acquire hosting
 - [x] SEO
+
+*Major UX improvements milestone - v0.2.0*
+
+- [] Adjust text size for all screen sizes
+- [] Fixed map size for all screens - don't stretch
+- [] Fix any responsiveness issues that come up
+- [] Logo heght should be the same as nav bar's
+- [] Nav buttons should look like buttons
 ------------------------------
 *Future milestones - real hard core*
 
