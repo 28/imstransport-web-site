@@ -1,4 +1,4 @@
-(defproject imstransport-web-site "0.1.0"
+(defproject imstransport-web-site "0.2.0-SNAPSHOT"
   :description "A interactive Web presentation for the
                auto-transport firm 'Nikola Josifović'."
   :url "http://www.imamesvuda.rs"
