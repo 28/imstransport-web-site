@@ -1,6 +1,7 @@
 (defproject imstransport-web-site "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "A interactive Web presentation for the
+               auto-transport firm 'Nikola Josifović'."
+  :url "http://www.imamesvuda.rs"
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.562"]

@@ -1,6 +1,6 @@
 # imstransport-web-site
 
-FIXME: description
+A interactive Web presentation for the auto-transport firm 'Nikola Josifović'.
 
 ## Developing
 
@@ -110,8 +110,14 @@ nil
 
 ## Deploying
 
-FIXME: steps to deploy
+Production version is deployed on Heroku environment.
+Before running setup install Heroku cli.
+To deploy run:
+
+``` shell
+lein deploy
+```
 
 ## Legal
 
-Copyright © 2016 FIXME
+Copyright Â© 2016-2018 Auto-transport firm 'Nikola Josifović'.
