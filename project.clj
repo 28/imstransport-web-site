@@ -2,6 +2,15 @@
   :description "A interactive Web presentation for the
                auto-transport firm 'Nikola Josifović'."
   :url "http://www.imamesvuda.rs"
+  :license {:name "GNU GENERAL PUBLIC LICENSE Version 3"
+            :url "https://www.gnu.org/licenses/gpl.txt"
+            :distribution :repo}
+ :pom-addition [:developers [:developer {:id "28"}
+							[:name "Dejan Josifović"]
+							[:url "https://github.com/28"]]
+							[:developer {:id "shomy4"}
+							[:name "Miloš Miletić"]
+							[:url "https://github.com/shomy4"]]]
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.562"]

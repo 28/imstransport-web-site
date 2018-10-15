@@ -1,8 +1,24 @@
 # imstransport-web-site
 
 A interactive Web presentation for the auto-transport firm 'Nikola Josifović'.
+The main feature/usage of the site is to calculate the price of the transportation
+by marking the start and end points on the map. Only considered area is Serbia and
+all routes that are outside the borders are not calculated. Site has only Serbian
+version.
+
+The site was hosted under www.imamesvuda.rs. Because of some technical difficulties
+with the DNS provider, we had to use [redirect.center](https://github.com/udleinati/redirect.center)
+to route the domain name to the Heroku repo.
+
+The firm was terminated in September 2018. and the site is released to public
+under GNU general public license v3.
+
+Non working version (Google Map API keys are disabled/expired) can be viewed
+[here](https://imamesvuda.herokuapp.com).
 
 ## Developing
+
+Some development documentation, as well as a todo list can be found [here](/doc).
 
 ### Setup
 
@@ -114,10 +130,12 @@ Production version is deployed on Heroku environment.
 Before running setup install Heroku cli.
 To deploy run:
 
-``` shell
+``` sh
 lein deploy
 ```
 
 ## Legal
 
-Copyright Â© 2016-2018 Auto-transport firm 'Nikola Josifović'.
+Copyright © 2016-2018 Auto-transport firm 'Nikola Josifović'.
+
+View [license](/LICENSE.txt).
